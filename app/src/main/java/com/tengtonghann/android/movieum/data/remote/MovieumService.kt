@@ -1,0 +1,16 @@
+package com.tengtonghann.android.movieum.data.remote
+
+import com.tengtonghann.android.movieum.model.MoviesResponse
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface MovieumService {
+
+    @GET("3/movie/popular")
+    suspend fun getPopularMovie(@Query("page") page: Int): Response<MoviesResponse>
+
+    companion object {
+        const val MOVIEUM_API_URL = "https://api.themoviedb.org/"
+    }
+}
