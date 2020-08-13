@@ -19,6 +19,6 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
 
     companion object {
         const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
-        const val IMAGE_SIZE_W185 = "w185"
+        const val IMAGE_SIZE_W185 = "w780"
     }
 }

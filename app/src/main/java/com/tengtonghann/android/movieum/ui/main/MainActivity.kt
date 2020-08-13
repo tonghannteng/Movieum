@@ -1,10 +1,10 @@
 package com.tengtonghann.android.movieum.ui.main
 
 import android.os.Bundle
-import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.tengtonghann.android.movieum.databinding.ActivityMainBinding
 import com.tengtonghann.android.movieum.model.State
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         setContentView(mViewBinding.root)
 
         mViewBinding.moviesRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
+            layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
             adapter = mAdapter
         }
 
