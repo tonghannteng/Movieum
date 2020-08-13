@@ -35,6 +35,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildTypes.each {
+        it.buildConfigField 'String', 'MOVIEUM_API_KEY', MOVIEUM_API_KEY
+    }
 }
 
 dependencies {
@@ -69,15 +73,9 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
 
-    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
-
     // Http interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:4.5.0"
     implementation "com.squareup.okhttp3:okhttp:4.5.0"
-
-    // JSON library - Moshi
-    implementation "com.squareup.moshi:moshi-kotlin:1.9.2"
-    implementation 'com.google.code.gson:gson:2.8.6'
 
     // asynchronous, non-blocking code - Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
@@ -89,5 +87,9 @@ dependencies {
 
     // Loading images - Coil
     implementation "io.coil-kt:coil:0.9.5"
+
+    // Debug network call and database - Stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
 
 }

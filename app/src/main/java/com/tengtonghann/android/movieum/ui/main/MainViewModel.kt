@@ -1,4 +1,4 @@
-package com.tengtonghann.android.movieum.ui
+package com.tengtonghann.android.movieum.ui.main
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
@@ -9,6 +9,7 @@ import com.tengtonghann.android.movieum.data.repository.MoviesRepository
 import com.tengtonghann.android.movieum.model.MoviesResponse
 import com.tengtonghann.android.movieum.model.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -23,9 +24,16 @@ class MainViewModel @ViewModelInject constructor(private val moviesRepository: M
 
     fun getMovies(page: Int) {
         viewModelScope.launch {
+//            val movie = async { moviesRepository.getAllMovies(page) }
+//            movie.await().collect {
+//                _moviesLiveData.value = it
+//            }
+
             moviesRepository.getAllMovies(page).collect {
-                _moviesLiveData.value = it
+//                _moviesLiveData.value = it
+                _moviesLiveData.postValue(it)
             }
+
         }
     }
 }

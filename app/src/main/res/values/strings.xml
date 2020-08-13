@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Movieum</string>
+    <string name="text_movie_header">Movie Header</string>
 </resources>
