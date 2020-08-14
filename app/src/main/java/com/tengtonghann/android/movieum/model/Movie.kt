@@ -32,9 +32,6 @@ data class Movie (
     @SerializedName("release_date")
     var releaseDate: String? = null,
 
-    @SerializedName("genres")
-    var genres: List<Int>? = null,
-
     @SerializedName("videos")
     var trailersResponse: Boolean,
 
@@ -42,6 +39,6 @@ data class Movie (
     var originalLanguage: String? = null
 ) {
     companion object {
-        const val TABLE_NAME = "movieum_movie"
+        const val TABLE_NAME = "popular_movie"
     }
 }

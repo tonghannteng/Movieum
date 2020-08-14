@@ -29,6 +29,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
 
+        // Initialize RecyclerView
         mViewBinding.moviesRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
             adapter = mAdapter
@@ -50,7 +51,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                         Logger.d(TAG, "Loading")
                     }
                     is State.Success -> {
-                        mAdapter.submitList(state.data.movies)
+                        mAdapter.submitList(state.data)
                     }
                     is State.Error -> {
                         Logger.d(TAG, "Failed")
