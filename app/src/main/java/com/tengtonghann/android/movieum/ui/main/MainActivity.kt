@@ -2,6 +2,7 @@ package com.tengtonghann.android.movieum.ui.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.tengtonghann.android.movieum.ui.base.BaseActivity
 import com.tengtonghann.android.movieum.ui.main.adapter.MovieAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
@@ -29,12 +31,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         setContentView(mViewBinding.root)
 
-        // Initialize RecyclerView
-        mViewBinding.moviesRecyclerView.apply {
+        // Initialize Popular RecyclerView
+        mViewBinding.popularMovieRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
             adapter = mAdapter
         }
 
+        // Initialize Trending RecyclerView
+        mViewBinding.trendingMovieRecyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
+            adapter = mAdapter
+        }
         initMovies()
     }
 
@@ -47,13 +54,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             this,
             Observer { state ->
                 when (state) {
-                    is State.Loading -> {
-                        Logger.d(TAG, "Loading")
-                    }
+                    is State.Loading -> showLoading(true)
                     is State.Success -> {
                         mAdapter.submitList(state.data)
+                        showLoading(false)
                     }
                     is State.Error -> {
+                        showLoading(false)
                         Logger.d(TAG, "Failed")
                     }
                 }
@@ -63,6 +70,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun getMovies() {
         mViewModel.getMovies(1)
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        mainProgressBar.isVisible = isLoading
     }
 
     override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)

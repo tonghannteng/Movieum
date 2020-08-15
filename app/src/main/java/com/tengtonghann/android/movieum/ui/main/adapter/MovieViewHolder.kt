@@ -1,7 +1,7 @@
 package com.tengtonghann.android.movieum.ui.main.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import coil.api.load
+import com.bumptech.glide.Glide
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.ItemMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
@@ -11,10 +11,13 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
 
     fun bind(movie: Movie) {
         binding.movieTitle.text = movie.title
-        binding.movieImageView.load(IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.posterPath) {
-            placeholder(R.drawable.ic_photo)
-            error(R.drawable.ic_broken_image)
-        }
+
+        Glide.with(itemView)
+            .load(IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.posterPath)
+            .placeholder(R.drawable.ic_photo)
+            .fitCenter()
+            .error(R.drawable.ic_broken_image)
+            .into(binding.movieImageView)
     }
 
     companion object {
