@@ -3,10 +3,10 @@ package com.tengtonghann.android.movieum.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.tengtonghann.android.movieum.model.Movie.Companion.TABLE_NAME
+import com.tengtonghann.android.movieum.model.TopRatedMovie.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-data class Movie (
+data class TopRatedMovie (
 
     @PrimaryKey
     @SerializedName("id")
@@ -40,6 +40,6 @@ data class Movie (
     var originalLanguage: String? = null
 ) {
     companion object {
-        const val TABLE_NAME = "popular_movie"
+        const val TABLE_NAME = "top_rate_movie"
     }
 }

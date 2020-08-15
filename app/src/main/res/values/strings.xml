@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Movieum</string>
     <string name="textMovieHeader">Movie Header</string>
-    <string name="trending">Trending</string>
+    <string name="topRated">Top Rated</string>
     <string name="showsByMostPeople">Shows that are being watched by most people.</string>
     <string name="popular">Popular</string>
-    <string name="popularTextDescription">Popularity is calculated using the rating percentage and the number of ratings.</string>
+    <string name="topRatedTextDescription">Top Rated is calculated using the rating percentage and the number of ratings.</string>
 </resources>

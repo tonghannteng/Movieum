@@ -4,22 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.tengtonghann.android.movieum.data.dao.PopularMovieDao
+import com.tengtonghann.android.movieum.data.dao.MoviesDao
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.TopRatedMovie
 
 /**
- * Abstract [MovieumDatabase]. It provides DAO [PopularMovieDao] by using [getPopularMovieDao]
+ * Abstract [MovieumDatabase]. It provides DAO [MoviesDao] by using [getPopularMovieDao]
  */
 @Database(
-    entities = [Movie::class],
+    entities = [Movie::class, TopRatedMovie::class],
     version = DatabaseMigrations.DB_VERSION
 )
 abstract class MovieumDatabase : RoomDatabase() {
 
     /**
-     * @return [PopularMovieDao] Movieum Movie Data Access Object
+     * @return [MoviesDao] Movieum Movie Data Access Object
      */
-    abstract fun getPopularMovieDao(): PopularMovieDao
+    abstract fun getMoviesMovieDao(): MoviesDao
 
     companion object {
         const val DB_NAME = "movieum_database"

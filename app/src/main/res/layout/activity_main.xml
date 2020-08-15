@@ -59,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/google_sans"
-                    android:text="@string/trending"
+                    android:text="@string/topRated"
                     android:textColor="@color/white"
                     android:textSize="@dimen/trending_dimen" />
 
@@ -68,7 +68,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_4"
                     android:fontFamily="@font/google_sans"
-                    android:text="@string/popularTextDescription"
+                    android:text="@string/topRatedTextDescription"
                     android:textColor="#787474"
                     android:textSize="@dimen/title_dimen" />
             </LinearLayout>

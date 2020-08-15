@@ -10,6 +10,7 @@ import com.tengtonghann.android.movieum.databinding.ActivityMainBinding
 import com.tengtonghann.android.movieum.model.State
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
 import com.tengtonghann.android.movieum.ui.main.adapter.MovieAdapter
+import com.tengtonghann.android.movieum.ui.main.adapter.TopRatedMovieAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -25,7 +26,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override val mViewModel: MainViewModel by viewModels()
 
-    private val mAdapter = MovieAdapter()
+    private val mPopularMovieAdapter = MovieAdapter()
+    private val mTopRatedMovieAdapter = TopRatedMovieAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,29 +36,47 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         // Initialize Popular RecyclerView
         mViewBinding.popularMovieRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
-            adapter = mAdapter
+            adapter = mPopularMovieAdapter
         }
 
         // Initialize Trending RecyclerView
         mViewBinding.trendingMovieRecyclerView.apply {
             layoutManager = LinearLayoutManager(this@MainActivity, RecyclerView.HORIZONTAL, false)
-            adapter = mAdapter
+            adapter = mTopRatedMovieAdapter
         }
         initMovies()
     }
 
     private fun initMovies() {
-        if (mViewModel.moviesLiveData.value !is State.Success) {
+        if ((mViewModel.popularMoviesLiveData.value !is State.Success) || (mViewModel.topRatedMoviesLiveData.value !is State.Success)) {
             getMovies()
         }
 
-        mViewModel.moviesLiveData.observe(
+        mViewModel.topRatedMoviesLiveData.observe(
             this,
             Observer { state ->
                 when (state) {
                     is State.Loading -> showLoading(true)
                     is State.Success -> {
-                        mAdapter.submitList(state.data)
+                        mTopRatedMovieAdapter.submitList(state.data)
+                        showLoading(false)
+                    }
+                    is State.Error -> {
+                        showLoading(false)
+                        Logger.d(TAG, "Failed")
+                    }
+                }
+
+            }
+        )
+
+        mViewModel.popularMoviesLiveData.observe(
+            this,
+            Observer { state ->
+                when (state) {
+                    is State.Loading -> showLoading(true)
+                    is State.Success -> {
+                        mPopularMovieAdapter.submitList(state.data)
                         showLoading(false)
                     }
                     is State.Error -> {
@@ -70,6 +90,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private fun getMovies() {
         mViewModel.getMovies(1)
+        mViewModel.getTopRatedMovies(1)
     }
 
     private fun showLoading(isLoading: Boolean) {

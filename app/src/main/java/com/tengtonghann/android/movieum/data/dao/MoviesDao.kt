@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.TopRatedMovie
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
  * for [com.tengtonghann.android.movieum.data.db.MovieumDatabase]
  */
 @Dao
-interface PopularMovieDao {
+interface MoviesDao {
 
     /**
      * Inserts popular [Movie] to database
@@ -31,4 +32,22 @@ interface PopularMovieDao {
      */
     @Query("SELECT * FROM ${Movie.TABLE_NAME}")
     fun getAllPopularMovies(): Flow<List<Movie>>
+
+    /**
+     * Inserts top rated movie [TopRatedMovie] to database
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertTopRatedMovies(topRateResponse: List<TopRatedMovie>)
+
+    /**
+     * Deletes all top rated movies from [TopRatedMovie.TABLE_NAME] table
+     */
+    @Query("DELETE FROM ${TopRatedMovie.TABLE_NAME}")
+    fun deleteAllTopRatedMovies()
+
+    /**
+     * Fetched all top rated movies from [TopRatedMovie.TABLE_NAME] table
+     */
+    @Query("SELECT * FROM ${TopRatedMovie.TABLE_NAME}")
+    fun getAllTopRatedMovies(): Flow<List<TopRatedMovie>>
 }

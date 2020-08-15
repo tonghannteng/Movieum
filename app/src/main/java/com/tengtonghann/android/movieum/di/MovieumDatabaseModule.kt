@@ -18,5 +18,5 @@ class MovieumDatabaseModule {
 
     @Singleton
     @Provides
-    fun providePopularMovieDao(database: MovieumDatabase) = database.getPopularMovieDao()
+    fun providePopularMovieDao(database: MovieumDatabase) = database.getMoviesMovieDao()
 }

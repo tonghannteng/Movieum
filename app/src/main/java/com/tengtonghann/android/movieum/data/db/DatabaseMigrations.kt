@@ -3,6 +3,7 @@ package com.tengtonghann.android.movieum.data.db
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.TopRatedMovie
 
 /**
  * Database Migration
@@ -16,6 +17,7 @@ object DatabaseMigrations {
     private fun migration12(): Migration = object : Migration(1, 2) {
         override fun migrate(database: SupportSQLiteDatabase) {
             database.execSQL("ALTER TABLE ${Movie.TABLE_NAME} ADD COLUMN body TEXT")
+            database.execSQL("ALTER TABLE ${TopRatedMovie.TABLE_NAME} ADD COLUMN body TEXT")
         }
     }
 
