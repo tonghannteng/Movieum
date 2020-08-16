@@ -14,34 +14,6 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-class MainViewModel @ViewModelInject constructor(
-    private val moviesRepository: MoviesRepository
-) :
-    ViewModel() {
+class MainViewModel: ViewModel() {
 
-    private val _popularMoviesLiveData = MutableLiveData<State<List<Movie>>>()
-    private val _topRatedMoviesLiveData = MutableLiveData<State<List<TopRatedMovie>>>()
-
-    val popularMoviesLiveData: LiveData<State<List<Movie>>>
-        get() = _popularMoviesLiveData
-
-    val topRatedMoviesLiveData: LiveData<State<List<TopRatedMovie>>>
-        get() = _topRatedMoviesLiveData
-
-
-    fun getMovies(page: Int) {
-        viewModelScope.launch {
-            moviesRepository.getPopularMovies(page).collect {
-                _popularMoviesLiveData.value = it
-            }
-        }
-    }
-
-    fun getTopRatedMovies(page: Int) {
-        viewModelScope.launch {
-            moviesRepository.getTopRatedMovies(page).collect {
-                _topRatedMoviesLiveData.value = it
-            }
-        }
-    }
 }
