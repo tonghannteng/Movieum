@@ -18,10 +18,17 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViewBinding = getViewBinding()
+        setContentView()
+        setupView()
+        setUpObservers()
+
     }
 
     /**
      * Returns [VB] which is assigned to [mViewBinding]
      */
-    abstract fun getViewBinding(): VB
+    protected abstract fun getViewBinding(): VB
+    protected abstract fun setContentView()
+    protected abstract fun setupView()
+    protected abstract fun setUpObservers()
 }

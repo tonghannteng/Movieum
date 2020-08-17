@@ -38,11 +38,9 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
      * Returns [VB] which is assigned to [mViewBinding]
      */
     protected abstract fun getViewBinding(view: View): VB
-
+    
     @LayoutRes
     protected abstract fun provideLayoutId(): Int
-
     protected abstract fun setupView(view: View)
-
     protected abstract fun initCreate()
 }

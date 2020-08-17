@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/itemHome"
+          android:title="@string/home"
+          android:titleCondensed="@string/home"
+          android:icon="@drawable/selector_home"
+          app:showAsAction="always"/>
+
+    <item android:id="@+id/itemFavoriteMovie"
+          android:title="@string/favorite"
+          android:titleCondensed="@string/favorite"
+          android:icon="@drawable/selector_add_photos"
+          app:showAsAction="always"/>
+
+</menu>
