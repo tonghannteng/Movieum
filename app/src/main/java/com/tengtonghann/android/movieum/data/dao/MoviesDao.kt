@@ -33,6 +33,9 @@ interface MoviesDao {
     @Query("SELECT * FROM ${Movie.TABLE_NAME}")
     fun getAllPopularMovies(): Flow<List<Movie>>
 
+    @Query("UPDATE popular_movie SET is_favorite = 1 WHERE id = :movieId")
+    suspend fun updateFavoriteMovie(movieId: Long)
+
     /**
      * Inserts top rated movie [TopRatedMovie] to database
      */

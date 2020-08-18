@@ -11,7 +11,7 @@ import com.tengtonghann.android.movieum.model.Movie
 /**
  * Adapter class for [RecyclerView] which bind [Movie]
  */
-class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
+class MovieAdapter(private val onItemClicked: (Movie) -> Unit) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MovieViewHolder(
         ItemMovieBinding.inflate(
@@ -22,7 +22,7 @@ class MovieAdapter : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
     )
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) =
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClicked)
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {

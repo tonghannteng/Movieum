@@ -64,4 +64,8 @@ class MoviesRepository @Inject constructor(
 
         }.asFlow().flowOn(Dispatchers.IO)
     }
+
+    suspend fun addFavoriteMovie(movie: Movie) {
+        moviesDao.updateFavoriteMovie(movie.id)
+    }
 }

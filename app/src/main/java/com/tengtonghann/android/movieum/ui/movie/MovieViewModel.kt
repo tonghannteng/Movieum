@@ -43,4 +43,10 @@ class MovieViewModel @ViewModelInject constructor(
             }
         }
     }
+
+    fun onFavoriteMovie(movie: Movie) {
+        viewModelScope.launch {
+            moviesRepository.addFavoriteMovie(movie)
+        }
+    }
 }

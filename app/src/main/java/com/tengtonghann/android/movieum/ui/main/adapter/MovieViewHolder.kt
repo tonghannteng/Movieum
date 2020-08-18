@@ -9,7 +9,7 @@ import com.tengtonghann.android.movieum.model.Movie
 class MovieViewHolder(private val binding: ItemMovieBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(movie: Movie) {
+    fun bind(movie: Movie, onItemClicked: (Movie) -> Unit) {
         binding.movieTitle.text = movie.title
 
         Glide.with(itemView)
@@ -18,6 +18,10 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
             .fitCenter()
             .error(R.drawable.ic_broken_image)
             .into(binding.movieImageView)
+
+        binding.addToFavorite.setOnClickListener {
+            onItemClicked(movie)
+        }
     }
 
     companion object {

@@ -2,6 +2,7 @@ package com.tengtonghann.android.movieum.ui.movie
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.FragmentMovieBinding
+import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.model.State
 import com.tengtonghann.android.movieum.ui.base.BaseFragment
 import com.tengtonghann.android.movieum.ui.main.adapter.MovieAdapter
@@ -37,7 +39,13 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
      * Inject ViewModel [MovieViewModel]
      */
     override val mViewModel: MovieViewModel by viewModels()
-    private val mPopularMovieAdapter = MovieAdapter()
+    private val mPopularMovieAdapter = MovieAdapter(this::onItemClicked)
+
+    private fun onItemClicked(movie: Movie) {
+        mViewModel.onFavoriteMovie(movie)
+        Toast.makeText(context, movie.title, Toast.LENGTH_SHORT).show()
+    }
+
     private val mTopRatedMovieAdapter = TopRatedMovieAdapter()
 
     override fun initCreate() {

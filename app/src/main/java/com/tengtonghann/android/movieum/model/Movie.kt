@@ -1,5 +1,6 @@
 package com.tengtonghann.android.movieum.model
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -35,6 +36,13 @@ data class Movie (
 
     @SerializedName("videos")
     var trailersResponse: Boolean,
+
+    /**
+     * Add Favorite Column for Favorite movie
+     */
+    @ColumnInfo(name = "is_favorite")
+    var isFavorite: Boolean = false,
+
 
     @SerializedName("original_language")
     var originalLanguage: String? = null

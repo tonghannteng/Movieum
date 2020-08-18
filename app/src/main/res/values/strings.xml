@@ -7,4 +7,6 @@
     <string name="topRatedTextDescription">Top Rated is calculated using the rating percentage and the number of ratings.</string>
     <string name="home">Home</string>
     <string name="favorite">Favorite</string>
+    <string name="youHaveNotAddedMovies">You have not added any movies to your favorite yet.</string>
+    <string name="add_favorite_movie">Add Favorite Movie</string>
 </resources>
