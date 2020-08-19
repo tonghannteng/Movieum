@@ -5,6 +5,6 @@
     <dimen name="dimen_4">4dp</dimen>
     <dimen name="dimen_16">16dp</dimen>
 
-    <dimen name="trending_dimen">24sp</dimen>
+    <dimen name="top_rated_dimen">24sp</dimen>
     <dimen name="title_dimen">16sp</dimen>
 </resources>

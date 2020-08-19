@@ -96,7 +96,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             it.getIfNotHandled()?.run { showHome() }
         })
         mViewModel.favoriteNavigation.observe(this, Observer {
-            it.getIfNotHandled()?.runCatching { showFavorite() }
+            it.getIfNotHandled()?.run { showFavorite() }
         })
     }
 

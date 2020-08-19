@@ -5,14 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.tengtonghann.android.movieum.data.dao.MoviesDao
+import com.tengtonghann.android.movieum.model.FavoriteMovie
 import com.tengtonghann.android.movieum.model.Movie
-import com.tengtonghann.android.movieum.model.TopRatedMovie
 
 /**
  * Abstract [MovieumDatabase]. It provides DAO [MoviesDao] by using [getPopularMovieDao]
  */
 @Database(
-    entities = [Movie::class, TopRatedMovie::class],
+    entities = [Movie::class, FavoriteMovie::class],
     version = DatabaseMigrations.DB_VERSION
 )
 abstract class MovieumDatabase : RoomDatabase() {

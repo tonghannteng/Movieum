@@ -12,7 +12,7 @@ import com.tengtonghann.android.movieum.ui.movie.viewHolder.MovieViewHolder
 /**
  * Adapter class for [RecyclerView] which bind [Movie]
  */
-class MovieAdapter(private val onItemClicked: (Movie) -> Unit) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
+class PopularAdapter(private val onItemClicked: (Movie) -> Unit) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         MovieViewHolder(

@@ -10,6 +10,7 @@ import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.ui.movie.viewHolder.MovieViewHolder
 
 /**
+ * @author Tonghann Teng
  * Adapter class for [RecyclerView] which bind [Movie]
  */
 class TopRatedAdapter(private val onItemClicked: (Movie) -> Unit) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {

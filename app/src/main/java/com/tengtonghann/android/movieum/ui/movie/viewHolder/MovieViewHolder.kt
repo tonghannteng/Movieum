@@ -1,4 +1,4 @@
-package com.tengtonghann.android.movieum.ui.main.adapter
+package com.tengtonghann.android.movieum.ui.movie.viewHolder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -6,6 +6,9 @@ import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.ItemMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
 
+/**
+ * @author Tonghann Teng
+ */
 class MovieViewHolder(private val binding: ItemMovieBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
@@ -20,6 +23,7 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
             .into(binding.movieImageView)
 
         binding.addToFavorite.setOnClickListener {
+            binding.addToFavorite.setImageResource(R.drawable.ic_heart_selected)
             onItemClicked(movie)
         }
     }

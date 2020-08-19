@@ -29,7 +29,7 @@
                     android:fontFamily="@font/google_sans"
                     android:text="@string/popular"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/trending_dimen" />
+                    android:textSize="@dimen/top_rated_dimen" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                     android:fontFamily="@font/google_sans"
                     android:text="@string/topRated"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/trending_dimen" />
+                    android:textSize="@dimen/top_rated_dimen" />
 
                 <TextView
                     android:layout_width="wrap_content"

@@ -13,12 +13,15 @@ import com.tengtonghann.android.movieum.databinding.FragmentMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.model.State
 import com.tengtonghann.android.movieum.ui.base.BaseFragment
-import com.tengtonghann.android.movieum.ui.main.adapter.MovieAdapter
-import com.tengtonghann.android.movieum.ui.main.adapter.TopRatedMovieAdapter
+import com.tengtonghann.android.movieum.ui.movie.adapter.PopularAdapter
+import com.tengtonghann.android.movieum.ui.movie.adapter.TopRatedAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * @author Tonghann Teng
+ */
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
@@ -39,14 +42,12 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
      * Inject ViewModel [MovieViewModel]
      */
     override val mViewModel: MovieViewModel by viewModels()
-    private val mPopularMovieAdapter = MovieAdapter(this::onItemClicked)
+    private val mMovieAdapter = PopularAdapter(this::onItemClicked)
+    private val mTopRatedAdapter = TopRatedAdapter(this::onItemClicked)
 
     private fun onItemClicked(movie: Movie) {
         mViewModel.onFavoriteMovie(movie)
-        Toast.makeText(context, movie.title, Toast.LENGTH_SHORT).show()
     }
-
-    private val mTopRatedMovieAdapter = TopRatedMovieAdapter()
 
     override fun initCreate() {
         initMovies()
@@ -57,44 +58,46 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
             getMovies()
         }
 
-        mViewModel.topRatedMoviesLiveData.observe(
-            this,
-            Observer { state ->
-                when (state) {
-                    is State.Loading -> showLoading(true)
-                    is State.Success -> {
-                        mTopRatedMovieAdapter.submitList(state.data)
-                        showLoading(false)
-                    }
-                    is State.Error -> {
-                        showLoading(false)
-                        Logger.d(TAG, "Failed")
-                    }
-                }
-
-            }
-        )
-
         mViewModel.popularMoviesLiveData.observe(
             this,
             Observer { state ->
                 when (state) {
                     is State.Loading -> showLoading(true)
                     is State.Success -> {
-                        mPopularMovieAdapter.submitList(state.data)
+                        mMovieAdapter.submitList(state.data)
                         showLoading(false)
                     }
                     is State.Error -> {
                         showLoading(false)
+                        // TODO: Add Error State log to Firebase
                         Logger.d(TAG, "Failed")
                     }
                 }
             }
         )
+
+        mViewModel.topRatedMoviesLiveData.observe(
+            this,
+            Observer { state ->
+                when (state) {
+                    is State.Loading -> showLoading(true)
+                    is State.Success -> {
+                        mTopRatedAdapter.submitList(state.data)
+                        showLoading(false)
+                    }
+                    is State.Error -> {
+                        showLoading(false)
+                        // TODO: Add Error State log to Firebase
+                        Logger.d(TAG, "Failed")
+                    }
+                }
+
+            }
+        )
     }
 
     private fun getMovies() {
-        mViewModel.getMovies(FIRST_PAGE)
+        mViewModel.getPopularMovies(FIRST_PAGE)
         mViewModel.getTopRatedMovies(FIRST_PAGE)
     }
 
@@ -113,17 +116,18 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
         mViewBinding.popularMovieRecyclerView.apply {
             layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            adapter = mPopularMovieAdapter
+            adapter = mMovieAdapter
         }
 
-        // Initialize Trending RecyclerView
-        mViewBinding.trendingMovieRecyclerView.apply {
+        // Initialize Top Rated RecyclerView
+        mViewBinding.topRatedMovieRecyclerView.apply {
             layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-            adapter = mTopRatedMovieAdapter
+            adapter = mTopRatedAdapter
         }
     }
 
+    // Binds [MovieFragment] view
     override fun getViewBinding(view: View): FragmentMovieBinding = FragmentMovieBinding.bind(view)
 
 }

@@ -5,6 +5,9 @@ import com.facebook.stetho.Stetho
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+/**
+ * Tonghann Teng
+ */
 @ExperimentalCoroutinesApi
 @HiltAndroidApp
 class MovieumApplication : Application() {

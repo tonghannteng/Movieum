@@ -3,11 +3,12 @@ package com.tengtonghann.android.movieum.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
 import com.tengtonghann.android.movieum.model.Movie.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
-data class Movie (
+data class Movie(
 
     @PrimaryKey
     @SerializedName("id")
@@ -38,6 +39,18 @@ data class Movie (
     var trailersResponse: Boolean,
 
     /**
+     * Add Popular Column for popular movie
+     */
+    @ColumnInfo(name = "is_popular")
+    var isPopular: Boolean = false,
+
+    /**
+     * Add Top Rated Column for Top Rated movie
+     */
+    @ColumnInfo(name = "is_top_rated")
+    var isTopRated: Boolean = false,
+
+    /**
      * Add Favorite Column for Favorite movie
      */
     @ColumnInfo(name = "is_favorite")
@@ -48,6 +61,6 @@ data class Movie (
     var originalLanguage: String? = null
 ) {
     companion object {
-        const val TABLE_NAME = "popular_movie"
+        const val TABLE_NAME = "movie"
     }
 }

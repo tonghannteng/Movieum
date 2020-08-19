@@ -8,27 +8,29 @@ import androidx.lifecycle.viewModelScope
 import com.tengtonghann.android.movieum.data.repository.MoviesRepository
 import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.model.State
-import com.tengtonghann.android.movieum.model.TopRatedMovie
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
+/**
+ * @author Tonghann Teng
+ */
 @ExperimentalCoroutinesApi
 class MovieViewModel @ViewModelInject constructor(
     private val moviesRepository: MoviesRepository
 ) : ViewModel() {
 
     private val _popularMoviesLiveData = MutableLiveData<State<List<Movie>>>()
-    private val _topRatedMoviesLiveData = MutableLiveData<State<List<TopRatedMovie>>>()
+    private val _topRatedMoviesLiveData = MutableLiveData<State<List<Movie>>>()
 
     val popularMoviesLiveData: LiveData<State<List<Movie>>>
         get() = _popularMoviesLiveData
 
-    val topRatedMoviesLiveData: LiveData<State<List<TopRatedMovie>>>
+    val topRatedMoviesLiveData: LiveData<State<List<Movie>>>
         get() = _topRatedMoviesLiveData
 
 
-    fun getMovies(page: Int) {
+    fun getPopularMovies(page: Int) {
         viewModelScope.launch {
             moviesRepository.getPopularMovies(page).collect {
                 _popularMoviesLiveData.value = it

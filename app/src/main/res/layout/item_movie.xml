@@ -51,8 +51,9 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/dimen_4"
                 android:contentDescription="@string/add_favorite_movie"
-                android:src="@drawable/ic_add_favorite_movie" />
+                android:src="@drawable/ic_heart_unselected" />
 
         </RelativeLayout>
 

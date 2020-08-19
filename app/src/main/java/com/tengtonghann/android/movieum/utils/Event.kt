@@ -3,7 +3,8 @@ package com.tengtonghann.android.movieum.utils
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Used as a wrapper for data that is exposed vai a LiveData that represents as event.
+ * @author Tonghann Teng
+ * Used as a wrapper for data that is exposed via a LiveData that represents as event.
  */
 data class Event<out T>(private val content: T) {
 
