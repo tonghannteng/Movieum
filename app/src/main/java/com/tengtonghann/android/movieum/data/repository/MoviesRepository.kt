@@ -89,7 +89,7 @@ class MoviesRepository @Inject constructor(
          * TODO: Find a way to convert [Movie] and [FavoriteMovie] object, both have the same object
          * Current implement set [Movie] properties to [FavoriteMovie]
          */
-        val favoriteMovie = FavoriteMovie(movie.id, movie.title, movie.posterPath)
+        val favoriteMovie = FavoriteMovie(movie.id, movie.title, movie.posterPath, movie.overview)
         moviesDao.insertFavoriteMovies(favoriteMovie)
     }
 

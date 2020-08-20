@@ -17,7 +17,10 @@ data class FavoriteMovie(
     var title: String? = null,
 
     @SerializedName("poster_path")
-    var posterPath: String? = null
+    var posterPath: String? = null,
+
+    @SerializedName("overview")
+    var overview: String? = null
 ) {
     companion object {
         const val TABLE_NAME = "favorite_movie"

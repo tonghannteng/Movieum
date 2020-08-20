@@ -6,5 +6,6 @@
     <dimen name="dimen_16">16dp</dimen>
 
     <dimen name="top_rated_dimen">24sp</dimen>
-    <dimen name="title_dimen">16sp</dimen>
+    <dimen name="title_dimen">18sp</dimen>
+    <dimen name="overview_dimen">16sp</dimen>
 </resources>

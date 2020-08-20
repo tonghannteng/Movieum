@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.tengtonghann.android.movieum.databinding.ItemMovieBinding
+import com.tengtonghann.android.movieum.databinding.ItemFavoriteMovieBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 import com.tengtonghann.android.movieum.ui.favorite.viewHolder.FavoriteViewHolder
 
@@ -16,7 +16,7 @@ class FavoriteAdapter(private val onItemClicked: (FavoriteMovie) -> Unit) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         FavoriteViewHolder(
-            ItemMovieBinding.inflate(
+            ItemFavoriteMovieBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false

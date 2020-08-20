@@ -50,7 +50,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
 
     override fun setupView(view: View) {
         mViewBinding.favoriteMovieRecyclerView.apply {
-                layoutManager = GridLayoutManager(context, 2)
+                layoutManager = LinearLayoutManager(context)
             adapter = mFavoriteAdapter
         }
     }
