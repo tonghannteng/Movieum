@@ -46,6 +46,7 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
         } catch (ex: Exception) {
             // Emit error! Exception occurred.
             emit(State.error("Network error! cannot get latest movies."))
+            // TODO: Add Exception to Firebase
             ex.printStackTrace()
         }
 
@@ -55,6 +56,10 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
                 State.success(it)
             }
         )
+    }.catch { ex ->
+        emit(State.error("Server error! can't get the movie"))
+        // TODO: Add Exception to Firebase
+        ex.printStackTrace()
     }
 
     /**
