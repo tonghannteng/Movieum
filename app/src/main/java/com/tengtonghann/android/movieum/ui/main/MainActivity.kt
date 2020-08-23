@@ -92,10 +92,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun setUpObservers() {
-        mViewModel.homeNavigation.observe(this, Observer {
+        mViewModel.homeNavigationLiveData.observe(this, Observer {
             it.getIfNotHandled()?.run { showHome() }
         })
-        mViewModel.favoriteNavigation.observe(this, Observer {
+        mViewModel.favoriteNavigationLiveData.observe(this, Observer {
             it.getIfNotHandled()?.run { showFavorite() }
         })
     }
