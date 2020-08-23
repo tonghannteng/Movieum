@@ -1,26 +1,35 @@
 package com.tengtonghann.android.movieum.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.tengtonghann.android.movieum.utils.Event
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
 class MainViewModel : ViewModel() {
 
-    val homeNavigation = MutableLiveData<Event<Boolean>>()
-    val favoriteNavigation = MutableLiveData<Event<Boolean>>()
+    private val _homeNavigationLiveData = MutableLiveData<Event<Boolean>>()
+    private val _favoriteNavigationLiveData = MutableLiveData<Event<Boolean>>()
+
+    val homeNavigationLiveData: LiveData<Event<Boolean>>
+        get() = _homeNavigationLiveData
+
+    val favoriteNavigationLiveData: LiveData<Event<Boolean>>
+        get() = _favoriteNavigationLiveData
 
     fun onCreated() {
-        homeNavigation.postValue(Event(true))
+        _homeNavigationLiveData.postValue(Event(true))
     }
 
     fun onHomeSelected() {
-        homeNavigation.postValue(Event(true))
+        _homeNavigationLiveData.postValue(Event(true))
     }
 
     fun onFavoriteSelected() {
-        favoriteNavigation.postValue(Event(true))
+        _favoriteNavigationLiveData.postValue(Event(true))
     }
 
 }
