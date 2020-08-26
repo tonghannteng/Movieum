@@ -32,9 +32,16 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
         
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@v1.3
-    # You may pin to the exact commit or the version.
-    # uses: SonarSource/sonarcloud-github-action@c35654669e40ece974c8835211c2e8ad9c802df0
+    - name: Set Up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-verion: 1.8
+    
+    - name: Run Tests
+      run: ./gradlew test
+    
+    - name: Build Project
+      run: ./gradlew assemble
+      
     
 
