@@ -3,6 +3,7 @@
 ## Version 1.0
 
 ![homescreen](photo/homescreen.png) ![favoritescreen](photo/favoritescreen.png)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftonghannteng%2FMovieum.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftonghannteng%2FMovieum?ref=badge_shield)
 ## About
 Movieum simply loads popular movies from [The Movie DB Api](https://developers.themoviedb.org/4/getting-started/authorization) and stores your favorite movies in persistence storage (i.e [Room](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase)).
 
@@ -29,3 +30,7 @@ Movieum attempts to make use of the latest Android libraries and best practices:
 ## Architecture
 Movieum uses **MVVM** with **Android Architecture Components (Room, LiveData, ViewModel)**
 ![androidarchitecture](photo/androidarchitecture.png)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftonghannteng%2FMovieum.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftonghannteng%2FMovieum?ref=badge_large)
