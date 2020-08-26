@@ -21,16 +21,6 @@ jobs:
         fetch-depth: 0
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
-      with:
-        projectBaseDir: my-custom-directory
-        args: >
-          -Dsonar.organization=tonghannteng
-          -Dsonar.projectKey=tonghannteng_Movieum
-          -Dsonar.python.coverage.reportPaths=coverage.xml
-          -Dsonar.sources=lib/
-          -Dsonar.test.exclusions=tests/**
-          -Dsonar.tests=tests/
-          -Dsonar.verbose=true:  
       env:
         GITHUB_TOKEN: 743c23a0a9f6c64c8b70a349d796815eb68fdbe1
         SONAR_TOKEN: 086f6bb60f54a97287c773419a350c7a1e43a685
