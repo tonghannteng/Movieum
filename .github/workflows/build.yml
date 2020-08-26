@@ -37,19 +37,19 @@ jobs:
       with:
         java-version: 1.8
         
-    #- name: Code Coverage
-     # uses: codecov/codecov-action@v1.0.13
-      #with:
-       # name: Movieum
-        #token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
-        #file: ./coverage.xml
-        
-        
-    - name: Code Coverage Report
-      uses: romeovs/lcov-reporter-action@v0.2.16
+    - name: Code Coverage
+      uses: codecov/codecov-action@v1.0.13
       with:
-        github-token: 743c23a0a9f6c64c8b70a349d796815eb68fdbe1
-        lcov-file: ./coverage/lcov.info
+        name: Movieum
+        token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
+        file: ./coverage.xml
+        
+        
+    #- name: Code Coverage Report
+     # uses: romeovs/lcov-reporter-action@v0.2.16
+      #with:
+       # github-token: 743c23a0a9f6c64c8b70a349d796815eb68fdbe1
+        #lcov-file: ./coverage/lcov.info
 
     
     #- name: Run Tests
