@@ -3,6 +3,7 @@ package com.tengtonghann.android.movieum.data.repository
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
 import com.tengtonghann.android.movieum.model.State
+import com.tengtonghann.android.movieum.utils.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import retrofit2.Response
@@ -44,10 +45,10 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
             }
 
         } catch (ex: Exception) {
+            Logger.e(ex)
+            ex.message?.let { Logger.d("NetworkBoundRepository", it) }
             // Emit error! Exception occurred.
             emit(State.error("Network error! cannot get latest movies."))
-            // TODO: Add Exception to Firebase
-            ex.printStackTrace()
         }
 
         // Retrieve movies from database and emit
@@ -57,9 +58,9 @@ abstract class NetworkBoundRepository<RESULT, REQUEST> {
             }
         )
     }.catch { ex ->
+        Logger.t(ex)
+        ex.message?.let { Logger.d("NetworkBoundRepository", it) }
         emit(State.error("Server error! can't get the movie"))
-        // TODO: Add Exception to Firebase
-        ex.printStackTrace()
     }
 
     /**

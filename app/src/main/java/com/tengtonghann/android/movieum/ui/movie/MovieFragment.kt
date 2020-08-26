@@ -1,8 +1,8 @@
 package com.tengtonghann.android.movieum.ui.movie
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +13,7 @@ import com.tengtonghann.android.movieum.databinding.FragmentMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.model.State
 import com.tengtonghann.android.movieum.ui.base.BaseFragment
+import com.tengtonghann.android.movieum.ui.detail.DetailActivity
 import com.tengtonghann.android.movieum.ui.movie.adapter.PopularAdapter
 import com.tengtonghann.android.movieum.ui.movie.adapter.TopRatedAdapter
 import com.tengtonghann.android.movieum.utils.Logger
@@ -42,11 +43,16 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
      * Inject ViewModel [MovieViewModel]
      */
     override val mViewModel: MovieViewModel by viewModels()
-    private val mMovieAdapter = PopularAdapter(this::onItemClicked)
-    private val mTopRatedAdapter = TopRatedAdapter(this::onItemClicked)
+    private val mMovieAdapter = PopularAdapter(this::onFavoriteClicked, this::onItemClicked)
+    private val mTopRatedAdapter = TopRatedAdapter(this::onFavoriteClicked, this::onItemClicked)
+
+    private fun onFavoriteClicked(movie: Movie) {
+        mViewModel.onFavoriteMovie(movie)
+    }
 
     private fun onItemClicked(movie: Movie) {
-        mViewModel.onFavoriteMovie(movie)
+        val intent = Intent(context, DetailActivity::class.java)
+        startActivity(intent)
     }
 
     override fun initCreate() {
@@ -69,8 +75,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
                     }
                     is State.Error -> {
                         showLoading(false)
-                        // TODO: Add Error State log to Firebase
-                        Logger.d(TAG, "Failed")
+                        Logger.d(TAG, "Error State getting popular movies")
                     }
                 }
             }
@@ -87,8 +92,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
                     }
                     is State.Error -> {
                         showLoading(false)
-                        // TODO: Add Error State log to Firebase
-                        Logger.d(TAG, "Failed")
+                        Logger.d(TAG, "Error State getting top rated movies")
                     }
                 }
 
