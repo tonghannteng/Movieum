@@ -42,6 +42,7 @@ jobs:
       with:
         name: Movieum
         token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
+        file: ./coverage.xml
 
     
     #- name: Run Tests
