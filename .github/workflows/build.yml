@@ -36,12 +36,21 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+        
+    - name: Code Coverage
+      uses: codecov/codecov-action@v1.0.13
+      with:
+        name: Movieum
+        token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
+
     
     #- name: Run Tests
      # run: ./gradlew test
     
     #- name: Build Project
      # run: ./gradlew assemble
+       
+
       
     
 
