@@ -49,7 +49,7 @@ jobs:
       uses: romeovs/lcov-reporter-action@v0.2.16
       with:
         github-token: 743c23a0a9f6c64c8b70a349d796815eb68fdbe1
-        lcov-file: ./coverage.xml
+        lcov-file: ./coverage.json
 
     
     #- name: Run Tests
