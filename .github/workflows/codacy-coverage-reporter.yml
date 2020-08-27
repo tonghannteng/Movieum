@@ -13,7 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Run codacy-coverage-reporter
-        uses: codacy/codacy-coverage-reporter-action@master
+        uses: codacy/codacy-coverage-reporter-action@0.2.0
         with:
           project-token: 31c35d5eff9a4a138b879e52f615129f
-          coverage-reports: cobertura.xml
