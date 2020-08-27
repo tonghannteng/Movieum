@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "735062161008",
+    "firebase_url": "https://movieum-34aa7.firebaseio.com",
+    "project_id": "movieum-34aa7",
+    "storage_bucket": "movieum-34aa7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735062161008:android:8c3e2062d36b4c7e5ce6b5",
+        "android_client_info": {
+          "package_name": "com.tengtonghann.android.movieum"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735062161008-u7beu9itog3fdldbmseua4otg84pnp6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9YlDquOaon0AfS-YRhlcw129V40K0K1A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735062161008-u7beu9itog3fdldbmseua4otg84pnp6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
