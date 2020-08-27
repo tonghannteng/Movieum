@@ -59,6 +59,11 @@ jobs:
 
     - name: Run Unit tests
       run: ./gradlew test --stacktrace 
+      
+    - name: Run Codacy Coverage Reporter
+      uses: codacy/codacy-coverage-reporter-action@master
+      with:
+        project-token: 31c35d5eff9a4a138b879e52f615129f
         
     #- name: Run tests and collect coverage
      # run: yarn run test-all
