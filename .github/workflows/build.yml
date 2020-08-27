@@ -44,14 +44,30 @@ jobs:
         token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
         file: ./coverage.xml
         
-    - name: Run tests and collect coverage
-      run: yarn run test-all
-    - name: Upload coverage to Codecov
-      uses: ./
+   # Cache gradle
+    - name: Cache Gradle and wrapper
+      uses: actions/cache@v2
       with:
-        file: ./coverage/coverage-final.json
-        flags: unittest
-        name: codecov-1
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+    - name: Validate Gradle Wrapper
+      uses: gradle/wrapper-validation-action@v1
+
+    - name: Run Unit tests
+      run: ./gradlew test --stacktrace 
+        
+    #- name: Run tests and collect coverage
+     # run: yarn run test-all
+    #- name: Upload coverage to Codecov
+     # uses: ./
+      #with:
+       # file: ./coverage/coverage-final.json
+        #flags: unittest
+        #name: codecov-1
       
         
         
