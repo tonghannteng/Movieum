@@ -15,4 +15,4 @@ jobs:
       - name: Run codacy-coverage-reporter
         uses: codacy/codacy-coverage-reporter-action@master
         with:
-          project-token: af62bdda1a704ce8bd1e2c45516f6c0d
+          project-token: 31c35d5eff9a4a138b879e52f615129f
