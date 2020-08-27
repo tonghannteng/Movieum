@@ -1,4 +1,4 @@
-name: codacy-coverage-reporter
+name: Codacy Coverage Reporter
 
 on:
   push:
@@ -9,10 +9,10 @@ on:
 jobs:
   codacy-coverage-reporter:
     runs-on: ubuntu-latest
-    name: codacy-coverage-reporter
+    name: Codacy Coverage Reporter
     steps:
       - uses: actions/checkout@master
-      - name: Run codacy-coverage-reporter
+      - name: Codacy Coverage Reporter
         uses: codacy/codacy-coverage-reporter-action@0.2.0
         with:
           project-token: 31c35d5eff9a4a138b879e52f615129f
