@@ -44,6 +44,17 @@ jobs:
         token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
         file: ./coverage.xml
         
+    - name: Run tests and collect coverage
+      run: yarn run test-all
+    - name: Upload coverage to Codecov
+      uses: ./
+      with:
+        files: ./coverage/calculator/coverage-final.json,./coverage/index/coverage-final.json
+        file: ./coverage/coverage-final.json
+        flags: unittest
+        name: codecov-1
+      
+        
         
     #- name: Code Coverage Report
      # uses: romeovs/lcov-reporter-action@v0.2.16
