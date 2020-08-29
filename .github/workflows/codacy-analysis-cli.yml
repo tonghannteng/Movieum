@@ -13,7 +13,7 @@ jobs:
         with:
           project-token: 31c35d5eff9a4a138b879e52f615129f
           
-      - name: Run codacy-coverage-reporter
+      - name: Run codacy-coverage-reporter final
         uses: codacy/codacy-coverage-reporter-action@master
         with:
           project-token: 31c35d5eff9a4a138b879e52f615129f
