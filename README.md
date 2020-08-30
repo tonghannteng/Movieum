@@ -31,6 +31,7 @@ Movieum attempts to make use of the latest Android libraries and best practices:
 - [Stecho](http://facebook.github.io/stetho/) Stetho is a sophisticated debug bridge for Android applications.
 - [Glide](https://github.com/bumptech/glide) supports fetching, decoding, and displaying video stills, images, and animated GIFs.
 - Firebase Crashlytics 
+- Leak Canary 
 ## Architecture
 Movieum uses **MVVM** with **Android Architecture Components (Room, LiveData, ViewModel)**
 ![androidarchitecture](photo/androidarchitecture.png)
