@@ -2,13 +2,10 @@ package com.tengtonghann.android.movieum.ui.favorite
 
 import android.os.Bundle
 import android.view.View
-import android.widget.GridLayout
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.FragmentFavoriteBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
@@ -50,7 +47,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
 
     override fun setupView(view: View) {
         mViewBinding.favoriteMovieRecyclerView.apply {
-                layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
             adapter = mFavoriteAdapter
         }
     }
@@ -70,5 +67,4 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
             }
         )
     }
-
 }

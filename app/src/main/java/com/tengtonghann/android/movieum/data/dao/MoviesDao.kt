@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -21,6 +22,9 @@ interface MoviesDao {
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMovies(moviesResponse: List<Movie>)
+
+    @Query("SELECT * FROM ${Movie.TABLE_NAME} WHERE id = :movieId")
+    fun getMovieDetail(movieId: Long): Flow<MovieDetail>
 
     /**
      * Updates popular column from [Movie] to 1

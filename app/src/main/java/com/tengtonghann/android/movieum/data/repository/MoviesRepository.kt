@@ -1,9 +1,12 @@
 package com.tengtonghann.android.movieum.data.repository
 
+import com.tengtonghann.android.movieum.data.dao.CastsDao
 import com.tengtonghann.android.movieum.data.dao.MoviesDao
+import com.tengtonghann.android.movieum.data.dao.ReviewsDao
+import com.tengtonghann.android.movieum.data.dao.TrailersDao
 import com.tengtonghann.android.movieum.data.remote.MovieumService
+import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.model.*
-import com.tengtonghann.android.movieum.utils.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -21,7 +24,10 @@ import javax.inject.Singleton
 @Singleton
 class MoviesRepository @Inject constructor(
     private val movieumService: MovieumService,
-    private val moviesDao: MoviesDao
+    private val moviesDao: MoviesDao,
+    private val castsDao: CastsDao,
+    private val reviewsDao: ReviewsDao,
+    private val trailersDao: TrailersDao
 ) {
 
     /**
@@ -84,6 +90,21 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
+    fun getMovieDetail(id: Long): Flow<State<MovieDetail>> {
+        return object : NetworkBoundRepository<MovieDetail, Movie>() {
+            override suspend fun saveNetworkData(response: Movie) {
+                saveDetailMovie(response)
+            }
+
+            override suspend fun fetchFromDatabase(): Flow<MovieDetail> =
+                moviesDao.getMovieDetail(id)
+
+            override suspend fun fetchMovieFromNetwork(): Response<Movie> =
+                movieumService.getMovieDetail(id)
+
+        }.asFlow().flowOn(Dispatchers.IO)
+    }
+
     suspend fun addFavoriteMovie(movie: Movie) {
         /**
          * TODO: Find a way to convert [Movie] and [FavoriteMovie] object, both have the same object
@@ -95,4 +116,43 @@ class MoviesRepository @Inject constructor(
 
     fun getFavoriteMovies(): Flow<List<FavoriteMovie>> =
         moviesDao.getAllFavoriteMovies()
+
+    fun saveDetailMovie(movie: Movie) {
+        movie.reviewsResponse?.let {
+            it.reviews?.let { review ->
+                insertReview(review, movie.id)
+            }
+        }
+        movie.creditsResponse?.let {
+            it.cast?.let { cast ->
+                insertCast(cast, movie.id)
+            }
+        }
+        movie.trailersResponse?.let {
+            it.trailers?.let { trailer ->
+                insertTrailer(trailer, movie.id)
+            }
+        }
+    }
+
+    private fun insertReview(reviews: List<Review>, id: Long) {
+        for (review in reviews) {
+            review.movieId = id
+        }
+        reviewsDao.insertReviews(reviews)
+    }
+
+    private fun insertCast(casts: List<Cast>, id: Long) {
+        for (cast in casts) {
+            cast.movieId = id
+        }
+        castsDao.insertCasts(casts)
+    }
+
+    private fun insertTrailer(trailers: List<Trailer>, id: Long) {
+        for (trailer in trailers) {
+            trailer.movieId = id
+        }
+        trailersDao.insertTrailers(trailers)
+    }
 }

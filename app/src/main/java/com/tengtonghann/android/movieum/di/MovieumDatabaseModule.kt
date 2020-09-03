@@ -19,4 +19,16 @@ class MovieumDatabaseModule {
     @Singleton
     @Provides
     fun providePopularMovieDao(database: MovieumDatabase) = database.getMoviesMovieDao()
+
+    @Singleton
+    @Provides
+    fun provideCastsDao(database: MovieumDatabase) = database.getCastsDao()
+
+    @Singleton
+    @Provides
+    fun provideReviewsDao(database: MovieumDatabase) = database.getReviewsDao()
+
+    @Singleton
+    @Provides
+    fun provideTrailersDao(database: MovieumDatabase) = database.getTrailersDao()
 }

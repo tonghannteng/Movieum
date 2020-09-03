@@ -23,5 +23,8 @@
         <item name="android:scaleType">centerCrop</item>
     </style>
 
-
+    <style name="PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+    <style name="Label" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 </resources>

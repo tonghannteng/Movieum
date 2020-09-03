@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.FragmentMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
-import com.tengtonghann.android.movieum.model.State
+import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.ui.base.BaseFragment
-import com.tengtonghann.android.movieum.ui.detail.DetailActivity
+import com.tengtonghann.android.movieum.ui.detail.MovieDetailActivity
 import com.tengtonghann.android.movieum.ui.movie.adapter.PopularAdapter
 import com.tengtonghann.android.movieum.ui.movie.adapter.TopRatedAdapter
 import com.tengtonghann.android.movieum.utils.Logger
@@ -51,7 +51,8 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
     }
 
     private fun onItemClicked(movie: Movie) {
-        val intent = Intent(context, DetailActivity::class.java)
+        val intent = Intent(context, MovieDetailActivity::class.java)
+        intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
         startActivity(intent)
     }
 
