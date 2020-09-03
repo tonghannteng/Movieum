@@ -9,4 +9,14 @@
     <string name="favorite">Favorite</string>
     <string name="youHaveNotAddedMovies">You have not added any movies to your favorite yet.</string>
     <string name="add_favorite_movie">Add Favorite Movie</string>
+    <string name="movie_poster">Movie poster</string>
+    <string name="release_date">Release date</string>
+    <string name="language">Language</string>
+    <string name="label_overview">Overview</string>
+    <string name="cast">The Cast</string>
+    <string name="trailers">Trailers</string>
+    <string name="user_reviews">User Reviews</string>
+    <string name="play_icon">Play icon</string>
+    <string name="trailer_thumbnail">Trailer thumbnail</string>
+    <string name="review_author_image">Review author image</string>
 </resources>

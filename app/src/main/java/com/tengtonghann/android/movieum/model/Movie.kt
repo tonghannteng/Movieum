@@ -2,6 +2,7 @@ package com.tengtonghann.android.movieum.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.google.gson.Gson
 import com.google.gson.annotations.SerializedName
@@ -29,14 +30,34 @@ data class Movie(
     @SerializedName("popularity")
     var popularity: Double = 0.toDouble(),
 
+    @ColumnInfo(name = "vote_average")
+    @SerializedName("vote_average")
+    var voteAverage: Double = 0.toDouble(),
+
     @SerializedName("vote_count")
     var voteCount: Int = 0,
 
     @SerializedName("release_date")
     var releaseDate: String? = null,
 
+    @SerializedName("original_language")
+    var originalLanguage: String? = null,
+
+//    @ColumnInfo(name = "genres")
+//    @SerializedName("genres")
+//    var genres: List<Genre>? = null,
+
+    @Ignore
     @SerializedName("videos")
-    var trailersResponse: Boolean,
+    var trailersResponse: TrailersResponse? = null,
+
+    @Ignore
+    @SerializedName("credits")
+    var creditsResponse: CreditsResponse? = null,
+
+    @Ignore
+    @SerializedName("reviews")
+    var reviewsResponse: ReviewsResponse? = null,
 
     /**
      * Add Popular Column for popular movie
@@ -54,11 +75,8 @@ data class Movie(
      * Add Favorite Column for Favorite movie
      */
     @ColumnInfo(name = "is_favorite")
-    var isFavorite: Boolean = false,
+    var isFavorite: Boolean = false
 
-
-    @SerializedName("original_language")
-    var originalLanguage: String? = null
 ) {
     companion object {
         const val TABLE_NAME = "movie"

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents">
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents">
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+</resources>

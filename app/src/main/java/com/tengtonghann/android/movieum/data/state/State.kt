@@ -1,4 +1,4 @@
-package com.tengtonghann.android.movieum.model
+package com.tengtonghann.android.movieum.data.state
 
 /**
  * State Management for UI and Data

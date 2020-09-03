@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/dimen_24"
+    android:layout_marginTop="@dimen/dimen_8"
+    android:layout_marginEnd="@dimen/dimen_16"
+    android:layout_marginBottom="@dimen/dimen_8"
+    android:background="@color/white"
+    android:clipChildren="false"
+    app:cardCornerRadius="@dimen/dimen_8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/image_author"
+            android:layout_width="@dimen/dimen_48"
+            android:layout_height="@dimen/dimen_48"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:contentDescription="@string/review_author_image"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ic_account_circle_black_24dp" />
+
+        <TextView
+            android:id="@+id/text_author"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/image_author"
+            app:layout_constraintTop_toTopOf="@+id/image_author"
+            tools:text="@tools:sample/full_names" />
+
+        <TextView
+            android:id="@+id/text_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_8"
+            android:layout_marginEnd="@dimen/dimen_16"
+            android:layout_marginBottom="@dimen/dimen_16"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_author"
+            app:layout_constraintTop_toBottomOf="@+id/text_author"
+            tools:text="@tools:sample/lorem" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

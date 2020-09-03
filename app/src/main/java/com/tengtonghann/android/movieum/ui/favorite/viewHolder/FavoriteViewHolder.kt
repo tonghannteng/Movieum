@@ -4,7 +4,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.ItemFavoriteMovieBinding
-import com.tengtonghann.android.movieum.databinding.ItemMovieBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 
 class FavoriteViewHolder(private val binding: ItemFavoriteMovieBinding) :

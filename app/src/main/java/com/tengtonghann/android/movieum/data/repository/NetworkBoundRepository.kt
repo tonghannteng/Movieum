@@ -2,7 +2,7 @@ package com.tengtonghann.android.movieum.data.repository
 
 import androidx.annotation.MainThread
 import androidx.annotation.WorkerThread
-import com.tengtonghann.android.movieum.model.State
+import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.utils.Logger
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
