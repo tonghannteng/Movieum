@@ -9,7 +9,7 @@ import com.tengtonghann.android.movieum.model.Trailer
 class TrailerViewHolder(private val binding: ItemTrailerBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(trailer: Trailer) {
+    fun bind(trailer: Trailer, onTrailerClick: (trailerKey: String) -> Unit) {
         binding.trailerName.text = trailer.title
         val thumbnail = "${YOUTUBE_BASE_URL}${trailer.key}${IMAGE_FORMAT}"
         Glide.with(itemView)
@@ -17,6 +17,12 @@ class TrailerViewHolder(private val binding: ItemTrailerBinding) :
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_broken_image)
             .into(binding.imageTrailer)
+
+        binding.cardTrailer.setOnClickListener {
+            trailer.key?.let { key ->
+                onTrailerClick(key)
+            }
+        }
     }
 
     companion object {
