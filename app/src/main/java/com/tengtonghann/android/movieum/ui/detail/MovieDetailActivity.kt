@@ -1,6 +1,8 @@
 package com.tengtonghann.android.movieum.ui.detail
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -10,9 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
 import com.tengtonghann.android.movieum.R
+import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.databinding.ActivityMovieDetailBinding
 import com.tengtonghann.android.movieum.model.Movie
-import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
 import com.tengtonghann.android.movieum.ui.detail.cast.CastAdapter
 import com.tengtonghann.android.movieum.ui.detail.review.ReviewAdapter
@@ -29,8 +31,18 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     override val mViewModel: MovieDetailViewModel by viewModels()
     private lateinit var movie: Movie
     private val mCastAdapter = CastAdapter()
-    private val mTrailerAdapter = TrailerAdapter()
+    private val mTrailerAdapter = TrailerAdapter(this::onTrailerClick)
     private val mReviewAdapter = ReviewAdapter()
+
+    private fun onTrailerClick(trailerKey: String) {
+        val appIntent = Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_VND}${trailerKey}")))
+        val webIntent = Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_WEB_URL}${trailerKey}")))
+        if (appIntent.resolveActivity(packageManager) != null) {
+            startActivity(appIntent)
+        } else {
+            startActivity(webIntent)
+        }
+    }
 
     override fun getViewBinding(): ActivityMovieDetailBinding =
         ActivityMovieDetailBinding.inflate(layoutInflater)
@@ -159,5 +171,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
         const val TAG = "MovieDetailActivity"
         const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
         const val IMAGE_SIZE_W780 = "w780"
+        const val YOUTUBE_VND = "vnd.youtube:"
+        const val YOUTUBE_WEB_URL = "https://www.youtube.com/watch?v="
     }
 }

@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import com.tengtonghann.android.movieum.databinding.ItemTrailerBinding
 import com.tengtonghann.android.movieum.model.Trailer
 
-class TrailerAdapter : ListAdapter<Trailer, TrailerViewHolder>(DIFF_CALLBACK) {
+class TrailerAdapter(
+    private val onTrailerClick: (trailerKey: String) -> Unit,
+) : ListAdapter<Trailer, TrailerViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         TrailerViewHolder(
@@ -19,7 +21,7 @@ class TrailerAdapter : ListAdapter<Trailer, TrailerViewHolder>(DIFF_CALLBACK) {
         )
 
     override fun onBindViewHolder(holder: TrailerViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onTrailerClick)
     }
 
     companion object {
