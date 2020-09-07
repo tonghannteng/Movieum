@@ -10,4 +10,6 @@
     <color name="imageBackgroundTint">#C3C3C3</color>
     <color name="white">@android:color/white</color>
     <color name="lightBrown">#C6BEBE</color>
+    <color name="colorStatusNotConnected">#D32F2F</color>
+    <color name="colorStatusConnected">#43A047</color>
 </resources>
