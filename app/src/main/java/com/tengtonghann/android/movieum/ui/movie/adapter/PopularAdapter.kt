@@ -2,6 +2,7 @@ package com.tengtonghann.android.movieum.ui.movie.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +15,7 @@ import com.tengtonghann.android.movieum.ui.movie.viewHolder.MovieViewHolder
  */
 class PopularAdapter(
     private val onFavoriteClicked: (Movie) -> Unit,
-    private val onItemClicked: (Movie) -> Unit
+    private val onItemClicked: (Movie, ImageView) -> Unit
 ) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

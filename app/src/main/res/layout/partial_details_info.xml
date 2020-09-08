@@ -35,6 +35,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/movie_poster"
             android:scaleType="centerCrop"
+            android:transitionName="@string/image_transition_name"
             tools:background="@tools:sample/backgrounds/scenic" />
 
     </androidx.cardview.widget.CardView>
