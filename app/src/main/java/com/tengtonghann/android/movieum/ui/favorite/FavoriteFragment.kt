@@ -1,8 +1,13 @@
 package com.tengtonghann.android.movieum.ui.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +15,9 @@ import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.FragmentFavoriteBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 import com.tengtonghann.android.movieum.ui.base.BaseFragment
+import com.tengtonghann.android.movieum.ui.detail.MovieDetailActivity
 import com.tengtonghann.android.movieum.ui.favorite.adapter.FavoriteAdapter
+import com.tengtonghann.android.movieum.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -33,11 +40,20 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
      * Inject ViewModel [FavoriteViewModel]
      */
     override val mViewModel: FavoriteViewModel by viewModels()
+    private lateinit var mActivity: AppCompatActivity
+
     private val mFavoriteAdapter =
         FavoriteAdapter(this::onItemClicked)
 
-    private fun onItemClicked(movie: FavoriteMovie) {
-        Toast.makeText(context, movie.title, Toast.LENGTH_SHORT).show()
+    private fun onItemClicked(movie: FavoriteMovie, imageView: ImageView) {
+        val intent = Intent(mActivity, MovieDetailActivity::class.java)
+        val imageViewPair = Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            mActivity,
+            imageViewPair
+        )
+        intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
+        startActivity(intent, options.toBundle())
     }
 
     override fun getViewBinding(view: View): FragmentFavoriteBinding =
@@ -46,6 +62,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
     override fun provideLayoutId(): Int = R.layout.fragment_favorite
 
     override fun setupView(view: View) {
+        mActivity = activity as MainActivity
         mViewBinding.favoriteMovieRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mFavoriteAdapter
