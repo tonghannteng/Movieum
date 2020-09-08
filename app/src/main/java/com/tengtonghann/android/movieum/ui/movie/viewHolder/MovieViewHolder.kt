@@ -1,5 +1,6 @@
 package com.tengtonghann.android.movieum.ui.movie.viewHolder
 
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tengtonghann.android.movieum.R
@@ -12,7 +13,7 @@ import com.tengtonghann.android.movieum.model.Movie
 class MovieViewHolder(private val binding: ItemMovieBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(movie: Movie, onFavoriteClicked: (Movie) -> Unit, onItemClicked: (Movie) -> Unit) {
+    fun bind(movie: Movie, onFavoriteClicked: (Movie) -> Unit, onItemClicked: (Movie, ImageView) -> Unit) {
         binding.movieTitle.text = movie.title
 
         Glide.with(itemView)
@@ -23,7 +24,7 @@ class MovieViewHolder(private val binding: ItemMovieBinding) :
             .into(binding.movieImageView)
 
         binding.movieImageView.setOnClickListener {
-            onItemClicked(movie)
+            onItemClicked(movie, binding.movieImageView)
         }
 
         binding.addToFavorite.setOnClickListener {

@@ -11,4 +11,24 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents">
         <item name="android:fontFamily">@font/google_sans</item>
     </style>
+
+    <!-- The theme without ActionBar -->
+    <style name="AppTheme.NoActionBar">
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        <item name="android:windowContentTransitions">true</item>
+
+        <!-- specify shared element transitions -->
+        <item name="android:windowSharedElementEnterTransition">
+            @transition/change_image_transform
+        </item>
+        <item name="android:windowSharedElementExitTransition">
+            @transition/change_image_transform
+        </item>
+    </style>
 </resources>

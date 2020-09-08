@@ -3,6 +3,7 @@ package com.tengtonghann.android.movieum.ui.detail
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.transition.Transition
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
@@ -125,19 +126,40 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
         text_vote.text = movie.voteAverage.toString()
         text_language.text = movie.originalLanguage
         text_overview.text = movie.overview
-        val movieImage = IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.backdropPath
+        val movieBackdropImage = IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.backdropPath
+        val moviePosterImage = IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.posterPath
 
         Glide.with(applicationContext)
-            .load(movieImage)
+            .load(movieBackdropImage)
             .into(imageMovieBackdrop)
 
         Glide.with(applicationContext)
-            .load(movieImage)
+            .load(moviePosterImage)
             .into(imagePoster)
+
+        window.sharedElementEnterTransition.addListener(object : Transition.TransitionListener {
+            override fun onTransitionEnd(transition: Transition?) {
+                transition?.removeListener(this)
+            }
+
+            override fun onTransitionStart(transition: Transition?) {
+            }
+
+            override fun onTransitionCancel(transition: Transition?) {
+            }
+
+            override fun onTransitionPause(transition: Transition?) {
+            }
+
+            override fun onTransitionResume(transition: Transition?) {
+            }
+        })
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        supportFinishAfterTransition()
+        if (item.itemId == android.R.id.home) {
+            supportFinishAfterTransition()
+        }
         return super.onOptionsItemSelected(item)
     }
 
