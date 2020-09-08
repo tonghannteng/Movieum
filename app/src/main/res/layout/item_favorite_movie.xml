@@ -14,6 +14,7 @@
     app:cardCornerRadius="@dimen/dimen_4">
 
     <LinearLayout
+        android:id="@+id/favoriteLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
@@ -26,6 +27,7 @@
             android:layout_margin="@dimen/dimen_4"
             android:layout_weight="3"
             android:contentDescription="@string/textMovieHeader"
+            android:transitionName="@string/image_transition_name"
             tools:src="@tools:sample/avatars" />
 
         <RelativeLayout
