@@ -32,6 +32,7 @@ Movieum attempts to make use of the latest Android libraries and best practices:
 - [Glide](https://github.com/bumptech/glide) supports fetching, decoding, and displaying video stills, images, and animated GIFs.
 - [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started?authuser=0&platform=android) realtime crash reporter
 - [LeakCanary](https://square.github.io/leakcanary/) a memory leak detection library for Android
+-
 ## Architecture
 Movieum uses **MVVM** with **Android Architecture Components (Room, LiveData, ViewModel)**
 ![androidarchitecture](photo/androidarchitecture.png)
