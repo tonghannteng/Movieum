@@ -19,7 +19,7 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initCreate()
+        initData()
     }
 
     override fun onCreateView(
@@ -42,5 +42,5 @@ abstract class BaseFragment<VM : ViewModel, VB : ViewBinding> : Fragment() {
     @LayoutRes
     protected abstract fun provideLayoutId(): Int
     protected abstract fun setupView(view: View)
-    protected abstract fun initCreate()
+    protected abstract fun initData()
 }
