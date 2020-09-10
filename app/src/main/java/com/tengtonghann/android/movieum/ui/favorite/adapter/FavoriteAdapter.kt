@@ -13,7 +13,9 @@ import com.tengtonghann.android.movieum.ui.favorite.viewHolder.FavoriteViewHolde
  * @author Tonghann Teng
  */
 class FavoriteAdapter(
-    private val onItemClicked: (FavoriteMovie, ImageView) -> Unit) :
+    private val onItemClicked: (FavoriteMovie, ImageView) -> Unit,
+    private val onLikeClicked: (FavoriteMovie) -> Unit
+) :
     ListAdapter<FavoriteMovie, FavoriteViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
@@ -26,7 +28,7 @@ class FavoriteAdapter(
         )
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) =
-        holder.bind(getItem(position), onItemClicked)
+        holder.bind(getItem(position), onItemClicked, onLikeClicked)
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<FavoriteMovie>() {
