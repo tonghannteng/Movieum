@@ -1,9 +1,6 @@
 package com.tengtonghann.android.movieum.data.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.model.MovieDetail
@@ -39,10 +36,10 @@ interface MoviesDao {
     suspend fun updateTopRatedMovie(movieId: Long)
 
     /**
-     * Updates favorite column from [Movie] to 1
+     * Delete unlike movie
      */
-    @Query("UPDATE ${Movie.TABLE_NAME} SET is_favorite = 1 WHERE id = :movieId")
-    suspend fun updateFavoriteMovie(movieId: Long)
+    @Delete
+    suspend fun unlikeMovie(movie: FavoriteMovie)
 
     /**
      * Insert favorite movies [FavoriteMovie] to database

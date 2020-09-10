@@ -10,6 +10,7 @@ import com.tengtonghann.android.movieum.model.FavoriteMovie
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.plus
 
 @ExperimentalCoroutinesApi
 class FavoriteViewModel @ViewModelInject constructor(
@@ -31,6 +32,12 @@ class FavoriteViewModel @ViewModelInject constructor(
                 _favoriteMoviesLiveData.value = it
                 _showEmptyText.value = it.isNotEmpty()
             }
+        }
+    }
+
+    fun unlikeMovie(movie: FavoriteMovie) {
+        viewModelScope.launch {
+            moviesRepository.unlikeMovie(movie)
         }
     }
 }

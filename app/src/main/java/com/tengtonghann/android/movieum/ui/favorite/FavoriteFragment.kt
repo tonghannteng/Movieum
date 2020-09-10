@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -43,7 +42,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
     private lateinit var mActivity: AppCompatActivity
 
     private val mFavoriteAdapter =
-        FavoriteAdapter(this::onItemClicked)
+        FavoriteAdapter(this::onItemClicked, this::onLikeClicked)
 
     private fun onItemClicked(movie: FavoriteMovie, imageView: ImageView) {
         val intent = Intent(mActivity, MovieDetailActivity::class.java)
@@ -54,6 +53,10 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
         )
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
         startActivity(intent, options.toBundle())
+    }
+
+    private fun onLikeClicked(movie: FavoriteMovie) {
+        mViewModel.unlikeMovie(movie)
     }
 
     override fun getViewBinding(view: View): FragmentFavoriteBinding =

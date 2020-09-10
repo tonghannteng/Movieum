@@ -155,4 +155,8 @@ class MoviesRepository @Inject constructor(
         }
         trailersDao.insertTrailers(trailers)
     }
+
+    suspend fun unlikeMovie(movie: FavoriteMovie) {
+        moviesDao.unlikeMovie(movie)
+    }
 }

@@ -7,15 +7,24 @@ import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.ItemFavoriteMovieBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 
-class FavoriteViewHolder(private val binding: ItemFavoriteMovieBinding) :
+class FavoriteViewHolder(
+    private val binding: ItemFavoriteMovieBinding,
+) :
     RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(favoriteMovie: FavoriteMovie, onItemClicked: (FavoriteMovie, ImageView) -> Unit) {
+    fun bind(
+        favoriteMovie: FavoriteMovie,
+        onItemClicked: (FavoriteMovie, ImageView) -> Unit,
+        onLikeCLicked: (FavoriteMovie) -> Unit
+    ) {
         binding.movieTitle.text = favoriteMovie.title
         binding.movieOverview.text = favoriteMovie.overview
         binding.addToFavorite.setImageResource(R.drawable.ic_heart_selected)
         binding.favoriteLayout.setOnClickListener {
             onItemClicked(favoriteMovie, binding.movieImageView)
+        }
+        binding.addToFavorite.setOnClickListener {
+            onLikeCLicked(favoriteMovie)
         }
 
         Glide.with(itemView)
