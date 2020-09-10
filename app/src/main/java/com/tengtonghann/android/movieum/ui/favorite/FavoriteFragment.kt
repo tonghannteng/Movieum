@@ -72,7 +72,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
         }
     }
 
-    override fun initCreate() {
+    override fun initData() {
         mViewModel.getFavoriteMovies()
         mViewModel.favoriteMoviesLiveData.observe(
             this,

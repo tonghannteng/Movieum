@@ -67,11 +67,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
         startActivity(intent, options.toBundle())
     }
 
-    override fun initCreate() {
-        initMovies()
-    }
-
-    private fun initMovies() {
+    override fun initData() {
         if ((mViewModel.popularMoviesLiveData.value !is State.Success) || (mViewModel.topRatedMoviesLiveData.value !is State.Success)) {
             getMovies()
         }
@@ -118,7 +114,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        mViewBinding.mainProgressBar.isVisible = isLoading
+        mViewBinding.swipeRefreshLayout.isRefreshing = isLoading
     }
 
     /**
@@ -140,6 +136,10 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
             layoutManager =
                 LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             adapter = mTopRatedAdapter
+        }
+
+        mViewBinding.swipeRefreshLayout.setOnRefreshListener {
+            getMovies()
         }
     }
 
