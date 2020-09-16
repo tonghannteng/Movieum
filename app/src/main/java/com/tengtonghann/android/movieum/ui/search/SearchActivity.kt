@@ -2,6 +2,7 @@ package com.tengtonghann.android.movieum.ui.search
 
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
@@ -79,12 +80,22 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
             this,
             { state ->
                 when (state) {
+                    is State.Loading -> showLoading(true)
                     is State.Success -> {
                         mSearchMovieAdapter.submitList(state.data.movies)
+                        showLoading(false)
+                    }
+                    is State.Error -> {
+                        showLoading(false)
+                        Logger.d(TAG, "Error State getting movies")
                     }
                 }
             }
         )
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        mViewBinding.searchProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun setupView() {
