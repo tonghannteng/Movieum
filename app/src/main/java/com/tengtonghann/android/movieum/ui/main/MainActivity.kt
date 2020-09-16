@@ -2,6 +2,9 @@ package com.tengtonghann.android.movieum.ui.main
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Intent
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -11,17 +14,20 @@ import com.tengtonghann.android.movieum.databinding.ActivityMainBinding
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
 import com.tengtonghann.android.movieum.ui.favorite.FavoriteFragment
 import com.tengtonghann.android.movieum.ui.movie.MovieFragment
+import com.tengtonghann.android.movieum.ui.search.SearchActivity
 import com.tengtonghann.android.movieum.utils.NetworkUtils
 import com.tengtonghann.android.movieum.utils.getColorRes
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     companion object {
-        const val TAG = "MainActivity"
+        const val TAG = "MainActivityLog"
         const val ANIMATION_DURATION = 1000.toLong()
     }
 
@@ -98,14 +104,36 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun setUpObservers() {
-        mViewModel.homeNavigationLiveData.observe(this, Observer {
+
+        mViewModel.homeNavigationLiveData.observe(this, {
             it.getIfNotHandled()?.run { showHome() }
         })
-        mViewModel.favoriteNavigationLiveData.observe(this, Observer {
+
+        mViewModel.favoriteNavigationLiveData.observe(this, {
             it.getIfNotHandled()?.run { showFavorite() }
         })
 
+        mViewModel.searchLiveData.observe(this, {
+            val search = findViewById<View>(R.id.searchView)
+            search.visibility = if (it) View.VISIBLE else View.GONE
+        })
+
         handleNetworkChanges()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.search_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.searchView -> {
+                val intent = Intent(this, SearchActivity::class.java)
+                startActivity(intent)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     /**

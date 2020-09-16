@@ -1,5 +1,6 @@
 package com.tengtonghann.android.movieum.utils
 
+import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 /**
@@ -7,8 +8,10 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
  */
 object Logger {
 
-    fun d(tag: String, message: String) =
+    fun d(tag: String, message: String) {
+        Log.d(tag, message)
         FirebaseCrashlytics.getInstance().setCustomKey(tag, message)
+    }
 
     fun e(e: Exception) =
         FirebaseCrashlytics.getInstance().recordException(e)

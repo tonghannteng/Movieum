@@ -27,7 +27,7 @@ abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivit
      * Returns [VB] which is assigned to [mViewBinding]
      */
     protected abstract fun getViewBinding(): VB
-    protected abstract fun setUpObservers()
     protected abstract fun setContentView()
     protected abstract fun setupView()
+    protected abstract fun setUpObservers()
 }

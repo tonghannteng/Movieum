@@ -23,6 +23,9 @@ interface MovieumService {
     @GET("3/movie/{id}?append_to_response=videos,credits,reviews")
     suspend fun getMovieDetail(@Path("id") id: Long): Response<Movie>
 
+    @GET("3/search/movie")
+    suspend fun getSearchMovie(@Query("query") query: String, @Query("page") page: Int): Response<MoviesResponse>
+
     companion object {
         const val MOVIEUM_API_URL = "https://api.themoviedb.org/"
     }

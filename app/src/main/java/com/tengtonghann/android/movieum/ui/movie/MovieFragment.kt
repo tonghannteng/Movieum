@@ -24,10 +24,12 @@ import com.tengtonghann.android.movieum.ui.movie.adapter.TopRatedAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
 /**
  * @author Tonghann Teng
  */
+@FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
@@ -124,6 +126,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
 
     override fun setupView(view: View) {
         mActivity = activity as MainActivity
+
         // Initialize Popular RecyclerView
         mViewBinding.popularMovieRecyclerView.apply {
             layoutManager =
