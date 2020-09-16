@@ -4,7 +4,7 @@
           android:title="@string/home"
           android:titleCondensed="@string/home"
           android:icon="@drawable/selector_home"
-          app:showAsAction="always"/>
+          app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/itemFavoriteMovie"
           android:title="@string/favorite"

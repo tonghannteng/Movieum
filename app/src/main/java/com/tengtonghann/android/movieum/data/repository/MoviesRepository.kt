@@ -90,6 +90,15 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
+    fun getSearchMovies(query: String, page: Int): Flow<State<MoviesResponse>> {
+        return object : NetworkBoundWithoutSavingRepository<MoviesResponse>() {
+
+            override suspend fun fetchMoviesFromNetwork(): Response<MoviesResponse> =
+                movieumService.getSearchMovie(query, page)
+
+        }.asFlow().flowOn(Dispatchers.IO)
+    }
+
     fun getMovieDetail(id: Long): Flow<State<MovieDetail>> {
         return object : NetworkBoundRepository<MovieDetail, Movie>() {
             override suspend fun saveNetworkData(response: Movie) {
