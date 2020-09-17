@@ -7,7 +7,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +35,7 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
 
     companion object {
         const val TAG = "MovieFragment"
-        const val FIRST_PAGE = 1
+        const val DEFAULT_PAGE = 1
 
         fun newInstance(): MovieFragment {
             val args = Bundle()
@@ -60,12 +59,14 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
 
     private fun onItemClicked(movie: Movie, imageView: ImageView) {
         val intent = Intent(mActivity, MovieDetailActivity::class.java)
-        val imageViewPair = Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
+        val imageViewPair =
+            Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             mActivity,
             imageViewPair
         )
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
+        intent.putExtra(MovieDetailActivity.SCREEN_FLAG, true)
         startActivity(intent, options.toBundle())
     }
 
@@ -111,8 +112,8 @@ class MovieFragment : BaseFragment<MovieViewModel, FragmentMovieBinding>() {
     }
 
     private fun getMovies() {
-        mViewModel.getPopularMovies(FIRST_PAGE)
-        mViewModel.getTopRatedMovies(FIRST_PAGE)
+        mViewModel.getPopularMovies(DEFAULT_PAGE)
+        mViewModel.getTopRatedMovies(DEFAULT_PAGE)
     }
 
     private fun showLoading(isLoading: Boolean) {

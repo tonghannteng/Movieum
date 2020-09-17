@@ -1,13 +1,17 @@
-package com.tengtonghann.android.movieum.ui.search
+package com.tengtonghann.android.movieum.ui.search.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.tengtonghann.android.movieum.databinding.ItemSearchMovieBinding
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.ui.search.viewHolder.SearchMovieHolder
 
-class SearchMovieAdapter : ListAdapter<Movie, SearchMovieHolder>(DIFF_CALLBACK) {
+class SearchMovieAdapter(
+    private val onItemClicked: (Movie, ImageView) -> Unit
+) : ListAdapter<Movie, SearchMovieHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         SearchMovieHolder(
@@ -19,7 +23,7 @@ class SearchMovieAdapter : ListAdapter<Movie, SearchMovieHolder>(DIFF_CALLBACK) 
         )
 
     override fun onBindViewHolder(holder: SearchMovieHolder, position: Int) =
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), onItemClicked)
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
