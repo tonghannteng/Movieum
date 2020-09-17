@@ -114,6 +114,14 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
+    fun getSearchMovieDetail(id: Long): Flow<State<Movie>> {
+        return object : NetworkBoundWithoutSavingRepository<Movie>() {
+
+            override suspend fun fetchMoviesFromNetwork(): Response<Movie> = movieumService.getMovieDetail(id)
+
+        }.asFlow().flowOn(Dispatchers.IO)
+    }
+
     suspend fun addFavoriteMovie(movie: Movie) {
         /**
          * TODO: Find a way to convert [Movie] and [FavoriteMovie] object, both have the same object

@@ -6,8 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tengtonghann.android.movieum.data.repository.MoviesRepository
-import com.tengtonghann.android.movieum.model.MovieDetail
 import com.tengtonghann.android.movieum.data.state.State
+import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.MovieDetail
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -18,14 +19,26 @@ class MovieDetailViewModel @ViewModelInject constructor(
 ) : ViewModel() {
 
     private val _detailMoviesLiveData = MutableLiveData<State<MovieDetail>>()
+    private val _detailSearchMoviesLiveData = MutableLiveData<State<Movie>>()
 
     val detailMoviesLiveData: LiveData<State<MovieDetail>>
         get() = _detailMoviesLiveData
+
+    val detailSearchMovieLiveData: LiveData<State<Movie>>
+        get() = _detailSearchMoviesLiveData
 
     fun getDetailMovies(id: Long) {
         viewModelScope.launch {
             moviesRepository.getMovieDetail(id).collect {
                 _detailMoviesLiveData.value = it
+            }
+        }
+    }
+
+    fun getSearchDetailMovies(id: Long) {
+        viewModelScope.launch {
+            moviesRepository.getSearchMovieDetail(id).collect {
+                _detailSearchMoviesLiveData.value = it
             }
         }
     }

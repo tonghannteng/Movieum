@@ -190,7 +190,7 @@
         tools:text="@tools:sample/lorem" />
 
     <TextView
-        android:id="@+id/label_cast"
+        android:id="@+id/labelCast"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -210,10 +210,10 @@
         android:paddingEnd="@dimen/dimen_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_cast" />
+        app:layout_constraintTop_toBottomOf="@+id/labelCast" />
 
     <TextView
-        android:id="@+id/label_trailers"
+        android:id="@+id/labelTrailers"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -234,10 +234,10 @@
         android:paddingEnd="@dimen/dimen_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_trailers" />
+        app:layout_constraintTop_toBottomOf="@+id/labelTrailers" />
 
     <TextView
-        android:id="@+id/label_reviews"
+        android:id="@+id/labelReviews"
         style="@style/Label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -256,6 +256,6 @@
         android:clipChildren="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_reviews" />
+        app:layout_constraintTop_toBottomOf="@+id/labelReviews" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

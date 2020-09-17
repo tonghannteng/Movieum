@@ -6,7 +6,8 @@ import android.net.Uri
 import android.transition.Transition
 import android.util.Log
 import android.view.MenuItem
-import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,11 +16,15 @@ import com.google.android.material.appbar.AppBarLayout
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.databinding.ActivityMovieDetailBinding
+import com.tengtonghann.android.movieum.model.Cast
 import com.tengtonghann.android.movieum.model.Movie
+import com.tengtonghann.android.movieum.model.Review
+import com.tengtonghann.android.movieum.model.Trailer
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
 import com.tengtonghann.android.movieum.ui.detail.cast.CastAdapter
 import com.tengtonghann.android.movieum.ui.detail.review.ReviewAdapter
 import com.tengtonghann.android.movieum.ui.detail.trailer.TrailerAdapter
+import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 import kotlinx.android.synthetic.main.partial_details_info.*
@@ -31,13 +36,17 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
     override val mViewModel: MovieDetailViewModel by viewModels()
     private lateinit var movie: Movie
+    private lateinit var trailers: List<Trailer>
+    private lateinit var casts: List<Cast>
+    private lateinit var reviews: List<Review>
     private val mCastAdapter = CastAdapter()
     private val mTrailerAdapter = TrailerAdapter(this::onTrailerClick)
     private val mReviewAdapter = ReviewAdapter()
 
     private fun onTrailerClick(trailerKey: String) {
         val appIntent = Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_VND}${trailerKey}")))
-        val webIntent = Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_WEB_URL}${trailerKey}")))
+        val webIntent =
+            Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_WEB_URL}${trailerKey}")))
         if (appIntent.resolveActivity(packageManager) != null) {
             startActivity(appIntent)
         } else {
@@ -78,16 +87,27 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
         }
     }
 
-    private fun getDetailMovies(id: Long) {
+    private fun getDetailMoviesFromHome(id: Long) =
         mViewModel.getDetailMovies(id)
-    }
+
+    private fun getDetailMoviesFromSearch(id: Long) =
+        mViewModel.getSearchDetailMovies(id)
 
     override fun setUpObservers() {
         val movieId = intent.extras?.getLong(MOVIE_ID)
-            ?: throw IllegalArgumentException("movieId must be non-nul")
+            ?: throw IllegalArgumentException("movieId must be non-null")
 
-        if (mViewModel.detailMoviesLiveData.value !is State.Success) {
-            getDetailMovies(movieId)
+        val screenFlag = intent.extras?.getBoolean(SCREEN_FLAG)
+            ?: throw IllegalAccessException("movie screen must be non-null")
+
+        if (screenFlag) {
+            if (mViewModel.detailMoviesLiveData.value !is State.Success) {
+                getDetailMoviesFromHome(movieId)
+            }
+        } else {
+            if (mViewModel.detailSearchMovieLiveData.value !is State.Success) {
+                getDetailMoviesFromSearch(movieId)
+            }
         }
 
         mViewModel.detailMoviesLiveData.observe(
@@ -101,17 +121,70 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                     is State.Success -> {
                         this@MovieDetailActivity.movie = state.data.movie!!
                         initDataToView(movie)
-                        mCastAdapter.submitList(state.data.castList)
-                        mTrailerAdapter.submitList(state.data.trailers)
-                        label_reviews.visibility =
-                            if (state.data.reviews.isEmpty()) View.GONE else View.VISIBLE
+
+                        this@MovieDetailActivity.casts = state.data.castList
+                        labelCast.visibility =
+                            if (casts.isEmpty()) GONE else VISIBLE
+                        if (casts.isNotEmpty()) {
+                            mCastAdapter.submitList(state.data.castList)
+                        }
+
+                        this@MovieDetailActivity.trailers = state.data.trailers
+                        labelTrailers.visibility =
+                            if (trailers.isEmpty()) GONE else VISIBLE
+                        if (trailers.isNotEmpty()) {
+                            mTrailerAdapter.submitList(state.data.trailers)
+                        }
+
+                        this@MovieDetailActivity.reviews = state.data.reviews
+                        labelReviews.visibility =
+                            if (state.data.reviews.isEmpty()) GONE else VISIBLE
                         if (state.data.reviews.isNotEmpty()) {
                             mReviewAdapter.submitList(state.data.reviews)
                         }
                     }
                     is State.Error -> {
-                        Log.d(TAG, "Error")
-                        // TODO: add Firebase Crashlytics
+                        Logger.d(TAG, "Error State getting movie detail")
+                    }
+                }
+            }
+        )
+
+        mViewModel.detailSearchMovieLiveData.observe(
+            this,
+            { state ->
+                when (state) {
+                    is State.Loading -> {
+                        Log.d(TAG, "Loading")
+                        // TODO: Add Loading
+                    }
+                    is State.Success -> {
+                        this@MovieDetailActivity.movie = state.data
+                        initDataToView(movie)
+
+                        this@MovieDetailActivity.casts = state.data.creditsResponse?.cast!!
+                        labelCast.visibility =
+                            if (casts.isEmpty()) GONE else VISIBLE
+                        if (casts.isNotEmpty()) {
+                            mCastAdapter.submitList(casts)
+                        }
+
+                        this@MovieDetailActivity.trailers = state.data.trailersResponse?.trailers!!
+                        labelTrailers.visibility =
+                            if (trailers.isEmpty()) GONE else VISIBLE
+                        if (trailers.isNotEmpty()) {
+                            mTrailerAdapter.submitList(trailers)
+                        }
+
+                        this@MovieDetailActivity.reviews = state.data.reviewsResponse?.reviews!!
+                        labelReviews.visibility =
+                            if (reviews.isEmpty()) GONE else VISIBLE
+                        if (reviews.isNotEmpty()) {
+                            mReviewAdapter.submitList(state.data.reviewsResponse?.reviews)
+                        }
+                    }
+                    is State.Error -> {
+                        Logger.d(TAG, "Error State getting movie detail")
                     }
                 }
             }
@@ -190,6 +263,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
     companion object {
         const val MOVIE_ID = "movieId"
+        const val SCREEN_FLAG = "screenFlag"
         const val TAG = "MovieDetailActivity"
         const val IMAGE_BASE_URL = "https://image.tmdb.org/t/p/"
         const val IMAGE_SIZE_W780 = "w780"

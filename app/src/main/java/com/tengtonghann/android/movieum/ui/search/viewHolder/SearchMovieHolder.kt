@@ -1,5 +1,6 @@
-package com.tengtonghann.android.movieum.ui.search
+package com.tengtonghann.android.movieum.ui.search.viewHolder
 
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tengtonghann.android.movieum.R
@@ -10,14 +11,21 @@ class SearchMovieHolder(
     private val binding: ItemSearchMovieBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(searchMovie: Movie) {
+    fun bind(
+        searchMovie: Movie,
+        onItemClicked: (Movie, ImageView) -> Unit
+    ) {
         binding.movieTitle.text = searchMovie.title
         binding.movieOverview.text = searchMovie.overview
         Glide.with(itemView)
             .load(IMAGE_BASE_URL + IMAGE_SIZE_W780 + searchMovie.posterPath)
             .placeholder(R.drawable.ic_photo)
             .error(R.drawable.ic_broken_image)
-            .into(binding.movieImageView)
+            .into(binding.searchImageView)
+
+        binding.searchLayout.setOnClickListener {
+            onItemClicked(searchMovie, binding.searchImageView)
+        }
     }
 
     companion object {

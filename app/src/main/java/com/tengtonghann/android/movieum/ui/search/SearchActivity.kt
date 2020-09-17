@@ -1,15 +1,22 @@
 package com.tengtonghann.android.movieum.ui.search
 
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.databinding.ActivitySearchBinding
+import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.ui.base.BaseActivity
+import com.tengtonghann.android.movieum.ui.detail.MovieDetailActivity
+import com.tengtonghann.android.movieum.ui.search.adapter.SearchMovieAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import com.tengtonghann.android.movieum.utils.getQueryTextChangeStateFlow
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,10 +34,24 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
 
     companion object {
         const val TAG = "SearchActivityLog"
+        const val DEFAULT_PAGE = 1
     }
 
     override val mViewModel: SearchViewModel by viewModels()
-    private val mSearchMovieAdapter = SearchMovieAdapter()
+    private val mSearchMovieAdapter = SearchMovieAdapter(this::onItemClicked)
+
+    private fun onItemClicked(movie: Movie, imageView: ImageView) {
+        val intent = Intent(this, MovieDetailActivity::class.java)
+        val imageViewPair =
+            Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            this,
+            imageViewPair
+        )
+        intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
+        intent.putExtra(MovieDetailActivity.SCREEN_FLAG, false)
+        startActivity(intent, options.toBundle())
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.search_screen_menu, menu)
@@ -56,7 +77,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
     }
 
     private fun getSearchMovies(result: String) {
-        mViewModel.getSearchMovies(result, 1)
+        mViewModel.getSearchMovies(result, DEFAULT_PAGE)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

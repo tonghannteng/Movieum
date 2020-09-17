@@ -52,6 +52,7 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
             imageViewPair
         )
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
+        intent.putExtra(MovieDetailActivity.SCREEN_FLAG, true)
         startActivity(intent, options.toBundle())
     }
 
