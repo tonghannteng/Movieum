@@ -250,7 +250,9 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                     }
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    collapsingToolbar.title = movie.title
+                    if (::movie.isInitialized ) {
+                        collapsingToolbar.title = movie.title
+                    }
                     isShow = true
                 } else if (isShow) {
                     collapsingToolbar.title = ""
