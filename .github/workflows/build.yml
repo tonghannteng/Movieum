@@ -56,6 +56,9 @@ jobs:
             ${{ runner.os }}-gradle-
     - name: Validate Gradle Wrapper
       uses: gradle/wrapper-validation-action@v1
+      
+    - name: Run Clean AssembleDebug
+      run: ./gradlew clean assembleDebug  
 
     - name: Run Unit tests
       run: ./gradlew test --stacktrace 
