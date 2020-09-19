@@ -127,21 +127,21 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                         labelCast.visibility =
                             if (casts.isEmpty()) GONE else VISIBLE
                         if (casts.isNotEmpty()) {
-                            mCastAdapter.submitList(movieDetail.castList)
+                            mCastAdapter.submitList(casts)
                         }
 
                         this@MovieDetailActivity.trailers = movieDetail.trailers
                         labelTrailers.visibility =
                             if (trailers.isEmpty()) GONE else VISIBLE
                         if (trailers.isNotEmpty()) {
-                            mTrailerAdapter.submitList(movieDetail.trailers)
+                            mTrailerAdapter.submitList(trailers)
                         }
 
                         this@MovieDetailActivity.reviews = movieDetail.reviews
                         labelReviews.visibility =
-                            if (movieDetail.reviews.isEmpty()) GONE else VISIBLE
-                        if (movieDetail.reviews.isNotEmpty()) {
-                            mReviewAdapter.submitList(movieDetail.reviews)
+                            if (reviews.isEmpty()) GONE else VISIBLE
+                        if (reviews.isNotEmpty()) {
+                            mReviewAdapter.submitList(reviews)
                         }
                     }
                     is State.Error -> {
