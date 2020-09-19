@@ -19,7 +19,9 @@ import com.tengtonghann.android.movieum.ui.favorite.adapter.FavoriteAdapter
 import com.tengtonghann.android.movieum.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 
+@FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding>() {
