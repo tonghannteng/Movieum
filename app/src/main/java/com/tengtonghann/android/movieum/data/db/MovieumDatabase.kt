@@ -15,8 +15,7 @@ import com.tengtonghann.android.movieum.model.*
  */
 @Database(
     entities = [Movie::class, FavoriteMovie::class, Trailer::class, Cast::class, Review::class],
-    version = DatabaseMigrations.DB_VERSION,
-    exportSchema = false
+    version = DatabaseMigrations.DB_VERSION
 )
 abstract class MovieumDatabase : RoomDatabase() {
 
