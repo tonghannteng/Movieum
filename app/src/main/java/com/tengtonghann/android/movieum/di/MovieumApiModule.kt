@@ -1,6 +1,7 @@
 package com.tengtonghann.android.movieum.di
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
+import com.tengtonghann.android.movieum.data.interceptor.AuthInterceptor
 import com.tengtonghann.android.movieum.data.remote.MovieumService
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,7 @@ class MovieumApiModule {
             OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                 .addInterceptor(AuthInterceptor())
+//                .addInterceptor(ErrorInterceptor())
                 .addNetworkInterceptor(StethoInterceptor())
                 .readTimeout(NETWORK_CALL_TIMEOUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(NETWORK_CALL_TIMEOUT.toLong(), TimeUnit.SECONDS)

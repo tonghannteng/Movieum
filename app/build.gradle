@@ -37,6 +37,12 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'crea
     ])
 }
 
+tasks.register("runOnGitHub") {
+    dependsOn(":app:lint", ":app:testDebugUnitTest") // ==> CUSTOMIZE THIS LINE
+    group = "custom"
+    description = "./gradlew runOnGitHub # runs on GitHub Action"
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
@@ -49,6 +55,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {

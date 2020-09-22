@@ -119,28 +119,29 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                         // TODO: Add Loading
                     }
                     is State.Success -> {
-                        this@MovieDetailActivity.movie = state.data.movie!!
+                        val movieDetail = state.data
+                        this@MovieDetailActivity.movie = movieDetail.movie!!
                         initDataToView(movie)
 
-                        this@MovieDetailActivity.casts = state.data.castList
+                        this@MovieDetailActivity.casts = movieDetail.castList
                         labelCast.visibility =
                             if (casts.isEmpty()) GONE else VISIBLE
                         if (casts.isNotEmpty()) {
-                            mCastAdapter.submitList(state.data.castList)
+                            mCastAdapter.submitList(casts)
                         }
 
-                        this@MovieDetailActivity.trailers = state.data.trailers
+                        this@MovieDetailActivity.trailers = movieDetail.trailers
                         labelTrailers.visibility =
                             if (trailers.isEmpty()) GONE else VISIBLE
                         if (trailers.isNotEmpty()) {
-                            mTrailerAdapter.submitList(state.data.trailers)
+                            mTrailerAdapter.submitList(trailers)
                         }
 
-                        this@MovieDetailActivity.reviews = state.data.reviews
+                        this@MovieDetailActivity.reviews = movieDetail.reviews
                         labelReviews.visibility =
-                            if (state.data.reviews.isEmpty()) GONE else VISIBLE
-                        if (state.data.reviews.isNotEmpty()) {
-                            mReviewAdapter.submitList(state.data.reviews)
+                            if (reviews.isEmpty()) GONE else VISIBLE
+                        if (reviews.isNotEmpty()) {
+                            mReviewAdapter.submitList(reviews)
                         }
                     }
                     is State.Error -> {
