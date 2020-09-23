@@ -57,8 +57,8 @@ jobs:
     - name: Validate Gradle Wrapper
       uses: gradle/wrapper-validation-action@v1  
 
-    #- name: Run Unit tests
-     # run: ./gradlew test --stacktrace 
+    - name: Run Unit tests
+      run: ./gradlew test --stacktrace 
       
     #- name: Run Codacy Coverage Reporter
      # uses: codacy/codacy-coverage-reporter-action@master
