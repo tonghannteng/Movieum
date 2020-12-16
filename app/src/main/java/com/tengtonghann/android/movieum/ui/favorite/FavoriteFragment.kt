@@ -48,15 +48,9 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
 
     private fun onItemClicked(movie: FavoriteMovie, imageView: ImageView) {
         val intent = Intent(mActivity, MovieDetailActivity::class.java)
-//        val imageViewPair = Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
-//        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//            mActivity,
-//            imageViewPair
-//        )
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
         intent.putExtra(MovieDetailActivity.SCREEN_FLAG, true)
         startActivity(intent)
-//        startActivity(intent, options.toBundle())
     }
 
     private fun onLikeClicked(movie: FavoriteMovie) {
