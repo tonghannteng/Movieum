@@ -42,16 +42,9 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
 
     private fun onItemClicked(movie: Movie, imageView: ImageView) {
         val intent = Intent(this, MovieDetailActivity::class.java)
-//        val imageViewPair =
-//            Pair.create<View, String>(imageView, getString(R.string.image_transition_name))
-//        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-//            this,
-//            imageViewPair
-//        )
         intent.putExtra(MovieDetailActivity.MOVIE_ID, movie.id)
         intent.putExtra(MovieDetailActivity.SCREEN_FLAG, false)
         startActivity(intent)
-//        startActivity(intent, options.toBundle())
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
