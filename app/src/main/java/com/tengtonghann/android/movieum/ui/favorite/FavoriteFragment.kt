@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.databinding.FragmentFavoriteBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
@@ -18,6 +18,7 @@ import com.tengtonghann.android.movieum.ui.detail.MovieDetailActivity
 import com.tengtonghann.android.movieum.ui.favorite.adapter.FavoriteAdapter
 import com.tengtonghann.android.movieum.ui.main.MainActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_favorite.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 
@@ -64,6 +65,9 @@ class FavoriteFragment : BaseFragment<FavoriteViewModel, FragmentFavoriteBinding
 
     override fun setupView(view: View) {
         mActivity = activity as MainActivity
+        MobileAds.initialize(context) {}
+        val adRequest = AdRequest.Builder().build()
+        adView.loadAd(adRequest)
         mViewBinding.favoriteMovieRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mFavoriteAdapter
