@@ -16,7 +16,7 @@ import com.tengtonghann.android.movieum.ui.movie.viewHolder.MovieViewHolder
  */
 class TopRatedAdapter(
     private val onFavoriteClicked: (Movie) -> Unit,
-    private val onItemClicked: (Movie, ImageView) -> Unit,
+    private val onItemClicked: (Movie, ImageView) -> Unit
 ) : ListAdapter<Movie, MovieViewHolder>(DIFF_CALLBACK) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

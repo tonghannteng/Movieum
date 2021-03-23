@@ -9,6 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.data.state.State
@@ -92,21 +93,20 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
 
     override fun setUpObservers() {
         mViewModel.searchMoviesLiveData.observe(
-            this,
-            { state ->
-                when (state) {
-                    is State.Loading -> showLoading(true)
-                    is State.Success -> {
-                        mSearchMovieAdapter.submitList(state.data.movies)
-                        showLoading(false)
-                    }
-                    is State.Error -> {
-                        showLoading(false)
-                        Logger.d(TAG, "Error State getting movies")
-                    }
+            this
+        ) { state ->
+            when (state) {
+                is State.Loading -> showLoading(true)
+                is State.Success -> {
+                    mSearchMovieAdapter.submitList(state.data.movies)
+                    showLoading(false)
+                }
+                is State.Error -> {
+                    showLoading(false)
+                    Logger.d(TAG, "Error State getting movies")
                 }
             }
-        )
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {

@@ -3,12 +3,12 @@ package com.tengtonghann.android.movieum.ui.detail
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
-import android.transition.Transition
 import android.util.Log
 import android.view.MenuItem
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -110,86 +110,82 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
             }
         }
 
-        mViewModel.detailMoviesLiveData.observe(
-            this,
-            { state ->
-                when (state) {
-                    is State.Loading -> {
-                        Log.d(TAG, "Loading")
-                        // TODO: Add Loading
+        mViewModel.detailMoviesLiveData.observe(this, Observer {
+            when (it) {
+                is State.Loading -> {
+                    Log.d(TAG, "Loading")
+                    // TODO: Add Loading
+                }
+                is State.Success -> {
+                    val movieDetail = it.data
+                    this@MovieDetailActivity.movie = movieDetail.movie!!
+                    initDataToView(movie)
+
+                    this@MovieDetailActivity.casts = movieDetail.castList
+                    labelCast.visibility =
+                        if (casts.isEmpty()) GONE else VISIBLE
+                    if (casts.isNotEmpty()) {
+                        mCastAdapter.submitList(casts)
                     }
-                    is State.Success -> {
-                        val movieDetail = state.data
-                        this@MovieDetailActivity.movie = movieDetail.movie!!
-                        initDataToView(movie)
 
-                        this@MovieDetailActivity.casts = movieDetail.castList
-                        labelCast.visibility =
-                            if (casts.isEmpty()) GONE else VISIBLE
-                        if (casts.isNotEmpty()) {
-                            mCastAdapter.submitList(casts)
-                        }
-
-                        this@MovieDetailActivity.trailers = movieDetail.trailers
-                        labelTrailers.visibility =
-                            if (trailers.isEmpty()) GONE else VISIBLE
-                        if (trailers.isNotEmpty()) {
-                            mTrailerAdapter.submitList(trailers)
-                        }
-
-                        this@MovieDetailActivity.reviews = movieDetail.reviews
-                        labelReviews.visibility =
-                            if (reviews.isEmpty()) GONE else VISIBLE
-                        if (reviews.isNotEmpty()) {
-                            mReviewAdapter.submitList(reviews)
-                        }
+                    this@MovieDetailActivity.trailers = movieDetail.trailers
+                    labelTrailers.visibility =
+                        if (trailers.isEmpty()) GONE else VISIBLE
+                    if (trailers.isNotEmpty()) {
+                        mTrailerAdapter.submitList(trailers)
                     }
-                    is State.Error -> {
-                        Logger.d(TAG, "Error State getting movie detail")
+
+                    this@MovieDetailActivity.reviews = movieDetail.reviews
+                    labelReviews.visibility =
+                        if (reviews.isEmpty()) GONE else VISIBLE
+                    if (reviews.isNotEmpty()) {
+                        mReviewAdapter.submitList(reviews)
                     }
                 }
+                is State.Error -> {
+                    Logger.d(TAG, "Error State getting movie detail")
+                }
             }
-        )
+
+        })
 
         mViewModel.detailSearchMovieLiveData.observe(
-            this,
-            { state ->
-                when (state) {
+            this, Observer {
+                when (it) {
                     is State.Loading -> {
                         Log.d(TAG, "Loading")
                         // TODO: Add Loading
                     }
                     is State.Success -> {
-                        this@MovieDetailActivity.movie = state.data
+                        this@MovieDetailActivity.movie = it.data
                         initDataToView(movie)
 
-                        this@MovieDetailActivity.casts = state.data.creditsResponse?.cast!!
+                        this@MovieDetailActivity.casts = it.data.creditsResponse?.cast!!
                         labelCast.visibility =
                             if (casts.isEmpty()) GONE else VISIBLE
                         if (casts.isNotEmpty()) {
                             mCastAdapter.submitList(casts)
                         }
 
-                        this@MovieDetailActivity.trailers = state.data.trailersResponse?.trailers!!
+                        this@MovieDetailActivity.trailers = it.data.trailersResponse?.trailers!!
                         labelTrailers.visibility =
                             if (trailers.isEmpty()) GONE else VISIBLE
                         if (trailers.isNotEmpty()) {
                             mTrailerAdapter.submitList(trailers)
                         }
 
-                        this@MovieDetailActivity.reviews = state.data.reviewsResponse?.reviews!!
+                        this@MovieDetailActivity.reviews = it.data.reviewsResponse?.reviews!!
                         labelReviews.visibility =
                             if (reviews.isEmpty()) GONE else VISIBLE
                         if (reviews.isNotEmpty()) {
-                            mReviewAdapter.submitList(state.data.reviewsResponse?.reviews)
+                            mReviewAdapter.submitList(it.data.reviewsResponse?.reviews)
                         }
                     }
                     is State.Error -> {
                         Logger.d(TAG, "Error State getting movie detail")
                     }
                 }
-            }
-        )
+            })
     }
 
     @SuppressLint("SetTextI18n")
@@ -233,7 +229,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                     }
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    if (::movie.isInitialized ) {
+                    if (::movie.isInitialized) {
                         collapsingToolbar.title = movie.title
                     }
                     isShow = true

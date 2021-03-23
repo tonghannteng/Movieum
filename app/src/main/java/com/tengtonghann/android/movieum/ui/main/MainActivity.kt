@@ -105,15 +105,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun setUpObservers() {
 
-        mViewModel.homeNavigationLiveData.observe(this, {
+        mViewModel.homeNavigationLiveData.observe(this, Observer {
             it.getIfNotHandled()?.run { showHome() }
         })
 
-        mViewModel.favoriteNavigationLiveData.observe(this, {
+        mViewModel.favoriteNavigationLiveData.observe(this, Observer {
             it.getIfNotHandled()?.run { showFavorite() }
         })
 
-        mViewModel.searchLiveData.observe(this, {
+        mViewModel.searchLiveData.observe(this, Observer {
             val search = findViewById<View>(R.id.searchView)
             search.visibility = if (it) View.VISIBLE else View.GONE
         })
