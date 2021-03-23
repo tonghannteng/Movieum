@@ -8,7 +8,7 @@ import com.tengtonghann.android.movieum.databinding.ItemFavoriteMovieBinding
 import com.tengtonghann.android.movieum.model.FavoriteMovie
 
 class FavoriteViewHolder(
-    private val binding: ItemFavoriteMovieBinding,
+    private val binding: ItemFavoriteMovieBinding
 ) :
     RecyclerView.ViewHolder(binding.root) {
 

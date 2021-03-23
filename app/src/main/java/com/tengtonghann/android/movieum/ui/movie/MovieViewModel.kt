@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.tengtonghann.android.movieum.data.repository.MoviesRepository
+import com.tengtonghann.android.movieum.data.repository.MoviesRepositoryInterface
 import com.tengtonghann.android.movieum.model.Movie
 import com.tengtonghann.android.movieum.data.state.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
  */
 @ExperimentalCoroutinesApi
 class MovieViewModel @ViewModelInject constructor(
-    private val moviesRepository: MoviesRepository
+    private val moviesRepository: MoviesRepositoryInterface
 ) : ViewModel() {
 
     private val _popularMoviesLiveData = MutableLiveData<State<List<Movie>>>()

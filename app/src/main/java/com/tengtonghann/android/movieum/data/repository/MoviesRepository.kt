@@ -28,13 +28,13 @@ class MoviesRepository @Inject constructor(
     private val castsDao: CastsDao,
     private val reviewsDao: ReviewsDao,
     private val trailersDao: TrailersDao
-) {
+): MoviesRepositoryInterface {
 
     /**
      * Fetched data from network and stored in database.
      * data from persistence is fetched and emitted.
      */
-    fun getPopularMovies(page: Int): Flow<State<List<Movie>>> {
+    override fun getPopularMovies(page: Int): Flow<State<List<Movie>>> {
 
         return object : NetworkBoundRepository<List<Movie>, MoviesResponse>() {
 
@@ -64,7 +64,7 @@ class MoviesRepository @Inject constructor(
      * Fetched data from network and stored in database.
      * data from persistence is fetched and emitted.
      */
-    fun getTopRatedMovies(page: Int): Flow<State<List<Movie>>> {
+    override fun getTopRatedMovies(page: Int): Flow<State<List<Movie>>> {
 
         return object : NetworkBoundRepository<List<Movie>, MoviesResponse>() {
 
@@ -90,7 +90,7 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
-    fun getSearchMovies(query: String, page: Int): Flow<State<MoviesResponse>> {
+    override fun getSearchMovies(query: String, page: Int): Flow<State<MoviesResponse>> {
         return object : NetworkBoundWithoutSavingRepository<MoviesResponse>() {
 
             override suspend fun fetchMoviesFromNetwork(): Response<MoviesResponse> =
@@ -99,7 +99,7 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
-    fun getMovieDetail(id: Long): Flow<State<MovieDetail>> {
+    override fun getMovieDetail(id: Long): Flow<State<MovieDetail>> {
         return object : NetworkBoundRepository<MovieDetail, Movie>() {
             override suspend fun saveNetworkData(response: Movie) {
                 saveDetailMovie(response)
@@ -114,7 +114,7 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
-    fun getSearchMovieDetail(id: Long): Flow<State<Movie>> {
+    override fun getSearchMovieDetail(id: Long): Flow<State<Movie>> {
         return object : NetworkBoundWithoutSavingRepository<Movie>() {
 
             override suspend fun fetchMoviesFromNetwork(): Response<Movie> = movieumService.getMovieDetail(id)
@@ -122,7 +122,7 @@ class MoviesRepository @Inject constructor(
         }.asFlow().flowOn(Dispatchers.IO)
     }
 
-    suspend fun addFavoriteMovie(movie: Movie) {
+    override suspend fun addFavoriteMovie(movie: Movie) {
         /**
          * TODO: Find a way to convert [Movie] and [FavoriteMovie] object, both have the same object
          * Current implement set [Movie] properties to [FavoriteMovie]
@@ -131,10 +131,10 @@ class MoviesRepository @Inject constructor(
         moviesDao.insertFavoriteMovies(favoriteMovie)
     }
 
-    fun getFavoriteMovies(): Flow<List<FavoriteMovie>> =
+    override fun getFavoriteMovies(): Flow<List<FavoriteMovie>> =
         moviesDao.getAllFavoriteMovies()
 
-    fun saveDetailMovie(movie: Movie) {
+    override fun saveDetailMovie(movie: Movie) {
         movie.reviewsResponse?.let {
             it.reviews?.let { review ->
                 insertReview(review, movie.id)
@@ -173,7 +173,7 @@ class MoviesRepository @Inject constructor(
         trailersDao.insertTrailers(trailers)
     }
 
-    suspend fun unlikeMovie(movie: FavoriteMovie) {
+    override suspend fun unlikeMovie(movie: FavoriteMovie) {
         moviesDao.unlikeMovie(movie)
     }
 }
