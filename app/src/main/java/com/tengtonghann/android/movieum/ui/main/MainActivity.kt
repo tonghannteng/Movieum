@@ -24,7 +24,9 @@ import kotlinx.coroutines.FlowPreview
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
+class MainActivity : BaseActivity<MainViewModel>() {
+
+    private lateinit var mBinding: ActivityMainBinding
 
     companion object {
         const val TAG = "MainActivityLog"
@@ -38,10 +40,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     private var activeFragment: Fragment? = null
 
-    override fun getViewBinding(): ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+    override fun setContentView() {
+        mBinding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
+        mViewModel.onCreated()
+    }
 
     override fun setupView() {
-        mViewBinding.bottomNavigation.run {
+        mBinding.bottomNavigation.run {
             itemIconTintList = null
             setOnNavigationItemSelectedListener {
                 when (it.itemId) {
@@ -98,25 +104,22 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         activeFragment = fragment
     }
 
-    override fun setContentView() {
-        mViewModel.onCreated()
-        setContentView(mViewBinding.root)
-    }
-
     override fun setUpObservers() {
 
-        mViewModel.homeNavigationLiveData.observe(this, Observer {
-            it.getIfNotHandled()?.run { showHome() }
-        })
+        mViewModel.homeNavigationLiveData.observe(this) {
+            it.getIfNotHandled()?.run {
+                showHome()
+            }
+        }
 
-        mViewModel.favoriteNavigationLiveData.observe(this, Observer {
+        mViewModel.favoriteNavigationLiveData.observe(this) {
             it.getIfNotHandled()?.run { showFavorite() }
-        })
+        }
 
-        mViewModel.searchLiveData.observe(this, Observer {
+        mViewModel.searchLiveData.observe(this) {
             val search = findViewById<View>(R.id.searchView)
             search.visibility = if (it) View.VISIBLE else View.GONE
-        })
+        }
 
         handleNetworkChanges()
     }
@@ -144,16 +147,16 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             this,
             Observer { isConnected ->
                 if (!isConnected) {
-                    mViewBinding.textViewNetworkStatus.text =
+                    mBinding.textViewNetworkStatus.text =
                         getString(R.string.text_no_connectivity)
-                    mViewBinding.networkStatusLayout.apply {
+                    mBinding.networkStatusLayout.apply {
                         visibility = View.VISIBLE // show
                         setBackgroundColor(getColorRes(R.color.colorStatusNotConnected))
                     }
                 } else {
-                    mViewBinding.textViewNetworkStatus.text =
+                    mBinding.textViewNetworkStatus.text =
                         getString(R.string.text_connectivity)
-                    mViewBinding.networkStatusLayout.apply {
+                    mBinding.networkStatusLayout.apply {
                         setBackgroundColor(getColorRes(R.color.colorStatusConnected))
 
                         // TODO: fixed animation
