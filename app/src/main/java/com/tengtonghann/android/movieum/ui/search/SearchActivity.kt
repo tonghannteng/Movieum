@@ -7,9 +7,6 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.GridLayoutManager
 import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.data.state.State
@@ -28,10 +25,11 @@ import kotlin.coroutines.CoroutineContext
 @FlowPreview
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), CoroutineScope {
+class SearchActivity : BaseActivity<SearchViewModel>(), CoroutineScope {
 
     private lateinit var searchView: SearchView
     private lateinit var job: Job
+    private lateinit var mBinding: ActivitySearchBinding
 
     companion object {
         const val TAG = "SearchActivityLog"
@@ -40,6 +38,12 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
 
     override val mViewModel: SearchViewModel by viewModels()
     private val mSearchMovieAdapter = SearchMovieAdapter(this::onItemClicked)
+
+
+    override fun setContentView() {
+        mBinding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
+    }
 
     private fun onItemClicked(movie: Movie, imageView: ImageView) {
         val intent = Intent(this, MovieDetailActivity::class.java)
@@ -110,7 +114,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
     }
 
     private fun showLoading(isLoading: Boolean) {
-        mViewBinding.searchProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+        mBinding.searchProgressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     override fun setupView() {
@@ -119,17 +123,9 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(), C
         actionbar?.setDisplayHomeAsUpEnabled(true)
         actionbar?.setDisplayShowHomeEnabled(true)
         job = Job()
-        mViewBinding.searchMovieRecyclerView.apply {
+        mBinding.searchMovieRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 2)
             adapter = mSearchMovieAdapter
         }
-
     }
-
-    override fun setContentView() {
-        setContentView(mViewBinding.root)
-    }
-
-    override fun getViewBinding(): ActivitySearchBinding =
-        ActivitySearchBinding.inflate(layoutInflater)
 }

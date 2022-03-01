@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout
-import com.tengtonghann.android.movieum.R
 import com.tengtonghann.android.movieum.data.state.State
 import com.tengtonghann.android.movieum.databinding.ActivityMovieDetailBinding
 import com.tengtonghann.android.movieum.model.Cast
@@ -26,13 +25,11 @@ import com.tengtonghann.android.movieum.ui.detail.review.ReviewAdapter
 import com.tengtonghann.android.movieum.ui.detail.trailer.TrailerAdapter
 import com.tengtonghann.android.movieum.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_movie_detail.*
-import kotlinx.android.synthetic.main.partial_details_info.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDetailBinding>() {
+class MovieDetailActivity : BaseActivity<MovieDetailViewModel>() {
 
     override val mViewModel: MovieDetailViewModel by viewModels()
     private lateinit var movie: Movie
@@ -42,6 +39,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
     private val mCastAdapter = CastAdapter()
     private val mTrailerAdapter = TrailerAdapter(this::onTrailerClick)
     private val mReviewAdapter = ReviewAdapter()
+    private lateinit var mBinding: ActivityMovieDetailBinding
 
     private fun onTrailerClick(trailerKey: String) {
         val appIntent = Intent(Intent(Intent.ACTION_VIEW, Uri.parse("${YOUTUBE_VND}${trailerKey}")))
@@ -54,34 +52,32 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
         }
     }
 
-    override fun getViewBinding(): ActivityMovieDetailBinding =
-        ActivityMovieDetailBinding.inflate(layoutInflater)
-
     override fun setContentView() {
-        setContentView(R.layout.activity_movie_detail)
+        mBinding = ActivityMovieDetailBinding.inflate(layoutInflater)
+        setContentView(mBinding.root)
     }
 
     override fun setupView() {
         // Set default title empty
-        toolbar.title = ""
-        setSupportActionBar(toolbar)
+        mBinding.toolbar.title = ""
+        setSupportActionBar(mBinding.toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         handleCollapseToolbarTitle()
 
         // Cast RecyclerView
-        castRecyclerView.apply {
+        mBinding.movieDetailsInfo.castRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             adapter = mCastAdapter
         }
 
         // Trailer RecyclerView
-        trailerRecyclerView.apply {
+        mBinding.movieDetailsInfo.trailerRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
             adapter = mTrailerAdapter
         }
 
         // Review RecyclerView
-        reviewRecyclerView.apply {
+        mBinding.movieDetailsInfo.reviewRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = mReviewAdapter
         }
@@ -122,21 +118,21 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                     initDataToView(movie)
 
                     this@MovieDetailActivity.casts = movieDetail.castList
-                    labelCast.visibility =
+                    mBinding.movieDetailsInfo.labelCast.visibility =
                         if (casts.isEmpty()) GONE else VISIBLE
                     if (casts.isNotEmpty()) {
                         mCastAdapter.submitList(casts)
                     }
 
                     this@MovieDetailActivity.trailers = movieDetail.trailers
-                    labelTrailers.visibility =
+                    mBinding.movieDetailsInfo.labelTrailers.visibility =
                         if (trailers.isEmpty()) GONE else VISIBLE
                     if (trailers.isNotEmpty()) {
                         mTrailerAdapter.submitList(trailers)
                     }
 
                     this@MovieDetailActivity.reviews = movieDetail.reviews
-                    labelReviews.visibility =
+                    mBinding.movieDetailsInfo.labelReviews.visibility =
                         if (reviews.isEmpty()) GONE else VISIBLE
                     if (reviews.isNotEmpty()) {
                         mReviewAdapter.submitList(reviews)
@@ -161,21 +157,21 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                         initDataToView(movie)
 
                         this@MovieDetailActivity.casts = it.data.creditsResponse?.cast!!
-                        labelCast.visibility =
+                        mBinding.movieDetailsInfo.labelCast.visibility =
                             if (casts.isEmpty()) GONE else VISIBLE
                         if (casts.isNotEmpty()) {
                             mCastAdapter.submitList(casts)
                         }
 
                         this@MovieDetailActivity.trailers = it.data.trailersResponse?.trailers!!
-                        labelTrailers.visibility =
+                        mBinding.movieDetailsInfo.labelTrailers.visibility =
                             if (trailers.isEmpty()) GONE else VISIBLE
                         if (trailers.isNotEmpty()) {
                             mTrailerAdapter.submitList(trailers)
                         }
 
                         this@MovieDetailActivity.reviews = it.data.reviewsResponse?.reviews!!
-                        labelReviews.visibility =
+                        mBinding.movieDetailsInfo.labelReviews.visibility =
                             if (reviews.isEmpty()) GONE else VISIBLE
                         if (reviews.isNotEmpty()) {
                             mReviewAdapter.submitList(it.data.reviewsResponse?.reviews)
@@ -190,22 +186,22 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
 
     @SuppressLint("SetTextI18n")
     private fun initDataToView(movie: Movie) {
-        text_title.text = movie.title
-        text_release_date.text = movie.releaseDate
-        label_vote.text = "${movie.voteCount} votes"
-        text_vote.text = movie.voteAverage.toString()
-        text_language.text = movie.originalLanguage
-        text_overview.text = movie.overview
+        mBinding.movieDetailsInfo.textTitle.text = movie.title
+        mBinding.movieDetailsInfo.textReleaseDate.text = movie.releaseDate
+        mBinding.movieDetailsInfo.labelVote.text = "${movie.voteCount} votes"
+        mBinding.movieDetailsInfo.textVote.text = movie.voteAverage.toString()
+        mBinding.movieDetailsInfo.textLanguage.text = movie.originalLanguage
+        mBinding.movieDetailsInfo.textOverview.text = movie.overview
         val movieBackdropImage = IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.backdropPath
         val moviePosterImage = IMAGE_BASE_URL + IMAGE_SIZE_W780 + movie.posterPath
 
         Glide.with(applicationContext)
             .load(movieBackdropImage)
-            .into(imageMovieBackdrop)
+            .into(mBinding.imageMovieBackdrop)
 
         Glide.with(applicationContext)
             .load(moviePosterImage)
-            .into(imagePoster)
+            .into(mBinding.movieDetailsInfo.imagePoster)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -219,7 +215,7 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
      * Set the title on the toolbar only if the toolbar is collapsed
      */
     private fun handleCollapseToolbarTitle() {
-        appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+        mBinding.appbar.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
             var isShow = true
             var scrollRange = -1
             override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
@@ -230,11 +226,11 @@ class MovieDetailActivity : BaseActivity<MovieDetailViewModel, ActivityMovieDeta
                 }
                 if (scrollRange + verticalOffset == 0) {
                     if (::movie.isInitialized) {
-                        collapsingToolbar.title = movie.title
+                        mBinding.collapsingToolbar.title = movie.title
                     }
                     isShow = true
                 } else if (isShow) {
-                    collapsingToolbar.title = ""
+                    mBinding.collapsingToolbar.title = ""
                     isShow = false
                 }
             }

@@ -5,6 +5,18 @@
       <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.3567708333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.16510416666666666" />
+        <entry key="app/src/main/res/layout/activity_movie_detail.xml" value="0.3302083333333333" />
+        <entry key="app/src/main/res/layout/fragment_movie.xml" value="0.3375" />
+        <entry key="app/src/main/res/layout/item_favorite_movie.xml" value="0.22760416666666666" />
+        <entry key="app/src/main/res/layout/partial_details_info.xml" value="0.33229166666666665" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
