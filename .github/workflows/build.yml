@@ -1,0 +1,94 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@master
+
+    # Runs a single command using the runners shell
+    - name: Run a one-line script
+      run: echo Hello, world!
+
+    # Runs a set of commands using the runners shell
+    - name: Run a multi-line script
+      run: |
+        echo Add other actions to build,
+        echo test, and deploy your project.
+        
+    - name: Set Up JDK
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.8
+        
+    - name: Code Coverage
+      uses: codecov/codecov-action@v1.0.3
+      with:
+        name: Movieum
+        token: 7cd5d534-5bb5-4313-959d-fdb2fa34e241
+        #file: ./coverage.xml
+        
+   # Cache gradle
+    - name: Cache Gradle and wrapper
+      uses: actions/cache@v2
+      with:
+        path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+        key: cache-${{ runner.os }}-${{ matrix.jdk }}-gradle-${{ hashFiles('**/*.gradle*') }}
+        restore-keys: |
+            ${{ runner.os }}-gradle-
+    - name: Validate Gradle Wrapper
+      uses: gradle/wrapper-validation-action@v1  
+
+    #- name: Run Unit tests
+     # run: ./gradlew test --stacktrace 
+      
+    #- name: Run Codacy Coverage Reporter
+     # uses: codacy/codacy-coverage-reporter-action@master
+      
+        
+    #- name: Run tests and collect coverage
+     # run: yarn run test-all
+    #- name: Upload coverage to Codecov
+     # uses: ./
+      #with:
+       # file: ./coverage/coverage-final.json
+        #flags: unittest
+        #name: codecov-1
+      
+        
+        
+    #- name: Code Coverage Report
+     # uses: romeovs/lcov-reporter-action@v0.2.16
+      #with:
+       # github-token: 743c23a0a9f6c64c8b70a349d796815eb68fdbe1
+        #lcov-file: ./coverage/lcov.info
+
+    
+    #- name: Run Tests
+     # run: ./gradlew test
+    
+    #- name: Build Project
+     # run: ./gradlew assemble
+       
+
+      
+    
+

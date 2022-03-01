@@ -9,24 +9,17 @@ import androidx.viewbinding.ViewBinding
  * Abstract Activity which binds [ViewModel]  [ViewBinding]
  */
 
-abstract class BaseActivity<VM : ViewModel, VB : ViewBinding> : AppCompatActivity() {
+abstract class BaseActivity<VM : ViewModel> : AppCompatActivity() {
 
     protected abstract val mViewModel: VM
 
-    protected lateinit var mViewBinding: VB
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mViewBinding = getViewBinding()
         setContentView()
         setupView()
         setUpObservers()
     }
 
-    /**
-     * Returns [VB] which is assigned to [mViewBinding]
-     */
-    protected abstract fun getViewBinding(): VB
     protected abstract fun setContentView()
     protected abstract fun setupView()
     protected abstract fun setUpObservers()
